@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美国西南14天旅行计划 · Arizona出发</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f7; color: #1a1a2e; }
+
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: white; padding: 28px 32px; }
+.header h1 { font-size: 24px; font-weight: 700; }
+.header p { font-size: 14px; opacity: 0.65; margin-top: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip { background: rgba(255,255,255,0.13); border-radius: 20px; padding: 5px 13px; font-size: 12px; font-weight: 500; }
+
+.tabs { display: flex; background: white; border-bottom: 2px solid #f0f0f0; padding: 0 24px; overflow-x: auto; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.tab { padding: 14px 18px; cursor: pointer; font-size: 13px; font-weight: 500; color: #888; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+.tab:hover { color: #e94560; }
+.tab.active { color: #e94560; border-bottom-color: #e94560; font-weight: 700; }
+
+.pane { display: none; padding: 24px; max-width: 1100px; margin: 0 auto; }
+.pane.active { display: block; }
+
+/* ── MAP ── */
+.map-box { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 14px rgba(0,0,0,0.07); }
+.map-box h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; }
+
+.legend-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px,1fr)); gap: 10px; margin-top: 20px; }
+.leg { display: flex; align-items: center; gap: 10px; background: #f8f9fa; border-radius: 10px; padding: 10px 13px; }
+.leg-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.leg-info h4 { font-size: 12px; font-weight: 700; }
+.leg-info p { font-size: 11px; color: #888; margin-top: 2px; }
+
+/* ── DAYS ── */
+.day-list { display: flex; flex-direction: column; gap: 14px; }
+.dc { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+.dc-head { display: flex; align-items: center; gap: 14px; padding: 15px 20px; cursor: pointer; user-select: none; }
+.dc-head:hover { background: #fafafa; }
+.dc-badge { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+.dc-meta { flex: 1; }
+.dc-meta h3 { font-size: 15px; font-weight: 700; }
+.dc-meta p { font-size: 12px; color: #888; margin-top: 2px; }
+.dc-arrow { color: #ccc; font-size: 20px; transition: transform 0.3s; }
+.dc.open .dc-arrow { transform: rotate(180deg); }
+.dc-body { display: none; padding: 0 20px 20px; }
+.dc.open .dc-body { display: block; }
+.day-plan { background: #f8f9fa; border-radius: 10px; padding: 12px 15px; margin: 12px 0; font-size: 12.5px; line-height: 1.85; color: #444; }
+
+/* ── SPOTS ── */
+.spots { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 13px; margin-top: 6px; }
+.spot { border-radius: 12px; overflow: hidden; border: 1px solid #eee; background: white; }
+.spot-photo { width: 100%; height: 155px; object-fit: cover; display: block; }
+.spot-fallback { width: 100%; height: 155px; display: flex; align-items: center; justify-content: center; font-size: 52px; background: linear-gradient(135deg, #f0f2f5, #e2e6ea); }
+.spot-info { padding: 12px 13px; }
+.spot-info h4 { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.spot-info p { font-size: 12px; color: #555; line-height: 1.55; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+.t { padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.ta { background: #e8f4fd; color: #1a6fa8; }
+.tw { background: #fff3cd; color: #856404; }
+.tg { background: #d4edda; color: #155724; }
+
+/* ── HOTELS ── */
+.city-block { margin-bottom: 30px; }
+.city-hd { font-size: 17px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 9px; }
+.hf-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media(max-width:640px){ .hf-cols { grid-template-columns: 1fr; } }
+.hf-card { background: white; border-radius: 13px; padding: 17px; box-shadow: 0 2px 9px rgba(0,0,0,0.06); }
+.hf-card h3 { font-size: 13px; font-weight: 700; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; margin-bottom: 13px; }
+.hf-item { margin-bottom: 13px; }
+.hf-name { font-size: 13px; font-weight: 700; color: #0f3460; }
+.hf-sub { font-size: 11px; color: #999; margin-top: 2px; }
+.hf-why { font-size: 12px; color: #555; margin-top: 5px; line-height: 1.55; }
+.price { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-left: 5px; }
+.p1 { background: #d4edda; color: #155724; }
+.p2 { background: #cce5ff; color: #004085; }
+.p3 { background: #f8d7da; color: #721c24; }
+
+/* ── TIPS ── */
+.tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 13px; }
+.tip-card { background: white; border-radius: 13px; padding: 18px; box-shadow: 0 2px 9px rgba(0,0,0,0.05); }
+.tip-icon { font-size: 28px; margin-bottom: 9px; }
+.tip-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.tip-card p { font-size: 12px; color: #666; line-height: 1.65; }
+
+.info-box { background: #fffbea; border: 1px solid #ffd43b; border-radius: 11px; padding: 14px 16px; margin-top: 16px; font-size: 12.5px; color: #856404; line-height: 1.8; }
+.info-box strong { color: #5c4000; }
+
+.checklist { background: white; border-radius: 13px; padding: 18px; box-shadow: 0 2px 9px rgba(0,0,0,0.05); margin-top: 16px; }
+.checklist h3 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+.checklist li { font-size: 12.5px; color: #444; line-height: 2; list-style: none; }
+.checklist li::before { content: "✅ "; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🇺🇸 美国西南大环线 · 14天旅行计划</h1>
+  <p>从Arizona与朋友汇合 → 大峡谷 → Sedona → Zion → Las Vegas → 加州 → 飞回</p>
+  <div class="chips">
+    <span class="chip">📅 9月中旬</span>
+    <span class="chip">✈️ 飞入PHX · 飞出LAX/SAN</span>
+    <span class="chip">🚗 全程自驾 ~1,600英里</span>
+    <span class="chip">👥 Day 1即与朋友汇合</span>
+    <span class="chip">🗓 14天</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('map',this)">🗺 路线总览</div>
+  <div class="tab" onclick="showTab('day',this)">📅 逐日行程</div>
+  <div class="tab" onclick="showTab('hotel',this)">🏨 住宿餐饮</div>
+  <div class="tab" onclick="showTab('tips',this)">💡 实用贴士</div>
+</div>
+
+<!-- ═══ MAP ═══ -->
+<div id="pane-map" class="pane active">
+  <div class="map-box">
+    <h2>路线方向：Arizona（东）→ Utah → Nevada → 加州（西）</h2>
+
+    <svg viewBox="0 0 820 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:12px;background:#c8ddf0;">
+      <!-- Land -->
+      <polygon points="158,0 820,0 820,540 190,540 145,470 125,390 118,310 132,230 150,150 158,70" fill="#e8ede0"/>
+      <!-- State lines -->
+      <line x1="158" y1="0" x2="540" y2="0" stroke="#bfcaaf" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <line x1="540" y1="0" x2="540" y2="290" stroke="#bfcaaf" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <line x1="540" y1="290" x2="820" y2="290" stroke="#bfcaaf" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <line x1="350" y1="0" x2="350" y2="540" stroke="#bfcaaf" stroke-width="1.5" stroke-dasharray="6,4"/>
+      <!-- State labels -->
+      <text x="210" y="200" fill="#9aaa8a" font-size="14" font-weight="600">CALIFORNIA</text>
+      <text x="395" y="155" fill="#9aaa8a" font-size="14" font-weight="600">NEVADA</text>
+      <text x="590" y="155" fill="#9aaa8a" font-size="14" font-weight="600">UTAH</text>
+      <text x="430" y="420" fill="#9aaa8a" font-size="14" font-weight="600">ARIZONA</text>
+      <text x="45" y="270" fill="#8caabb" font-size="12" font-weight="600" transform="rotate(-90,45,270)">PACIFIC OCEAN</text>
+
+      <!-- Route lines -->
+      <!-- PHX → Sedona -->
+      <path d="M575,445 L545,385" fill="none" stroke="#e94560" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Sedona → Grand Canyon -->
+      <path d="M545,385 L520,315" fill="none" stroke="#e94560" stroke-width="3.5"/>
+      <!-- Grand Canyon → Page/Horseshoe -->
+      <path d="M520,315 L558,265" fill="none" stroke="#e94560" stroke-width="3.5"/>
+      <!-- Page → Zion -->
+      <path d="M558,265 L458,215" fill="none" stroke="#e94560" stroke-width="3.5"/>
+      <!-- Zion → Vegas -->
+      <path d="M458,215 L395,260" fill="none" stroke="#e94560" stroke-width="3.5"/>
+      <!-- Vegas → Joshua Tree -->
+      <path d="M395,260 Q345,315 272,378" fill="none" stroke="#e94560" stroke-width="3.5"/>
+      <!-- Joshua Tree → LA -->
+      <path d="M272,378 L188,365" fill="none" stroke="#e94560" stroke-width="3.5"/>
+      <!-- LA → San Diego (optional) -->
+      <path d="M188,365 L170,440" fill="none" stroke="#e94560" stroke-width="2.5" stroke-dasharray="9,5" opacity="0.6"/>
+
+      <!-- START: PHX/Scottsdale -->
+      <circle cx="575" cy="447" r="22" fill="#27ae60" stroke="white" stroke-width="3"/>
+      <text x="575" y="442" text-anchor="middle" fill="white" font-size="9" font-weight="700">START</text>
+      <text x="575" y="455" text-anchor="middle" fill="white" font-size="9" font-weight="700">D1-2</text>
+      <text x="575" y="476" text-anchor="middle" fill="#1a2e1a" font-size="12" font-weight="700">Scottsdale/PHX</text>
+      <text x="575" y="491" text-anchor="middle" fill="#555" font-size="10">👥 朋友汇合</text>
+
+      <!-- Sedona D3 -->
+      <circle cx="545" cy="383" r="16" fill="#d35400" stroke="white" stroke-width="2.5"/>
+      <text x="545" y="389" text-anchor="middle" fill="white" font-size="11" font-weight="700">D3</text>
+      <text x="517" y="374" fill="#2a1a0a" font-size="12" font-weight="700">Sedona</text>
+
+      <!-- Grand Canyon D4-5 -->
+      <circle cx="520" cy="313" r="19" fill="#2980b9" stroke="white" stroke-width="2.5"/>
+      <text x="520" y="309" text-anchor="middle" fill="white" font-size="10" font-weight="700">D4</text>
+      <text x="520" y="321" text-anchor="middle" fill="white" font-size="10" font-weight="700">-5</text>
+      <text x="490" y="300" fill="#0a1a2a" font-size="11" font-weight="700">Grand Canyon</text>
+
+      <!-- Page/Horseshoe D5 afternoon -->
+      <circle cx="558" cy="263" r="14" fill="#8e44ad" stroke="white" stroke-width="2.5"/>
+      <text x="558" y="269" text-anchor="middle" fill="white" font-size="10" font-weight="700">D5</text>
+      <text x="577" y="263" fill="#2a0a3a" font-size="11" font-weight="700">Page/</text>
+      <text x="577" y="277" fill="#2a0a3a" font-size="11" font-weight="700">Horseshoe</text>
+
+      <!-- Zion D6 -->
+      <circle cx="458" cy="213" r="16" fill="#16a085" stroke="white" stroke-width="2.5"/>
+      <text x="458" y="219" text-anchor="middle" fill="white" font-size="11" font-weight="700">D6</text>
+      <text x="458" y="200" text-anchor="middle" fill="#0a2a2a" font-size="11" font-weight="700">Zion NP</text>
+
+      <!-- Las Vegas D7-8 -->
+      <circle cx="395" cy="258" r="19" fill="#f39c12" stroke="white" stroke-width="2.5"/>
+      <text x="395" y="254" text-anchor="middle" fill="white" font-size="10" font-weight="700">D7</text>
+      <text x="395" y="266" text-anchor="middle" fill="white" font-size="10" font-weight="700">-8</text>
+      <text x="395" y="284" text-anchor="middle" fill="#2a1a0a" font-size="12" font-weight="700">Las Vegas</text>
+
+      <!-- Joshua Tree D9 -->
+      <circle cx="272" cy="376" r="15" fill="#c0392b" stroke="white" stroke-width="2.5"/>
+      <text x="272" y="382" text-anchor="middle" fill="white" font-size="11" font-weight="700">D9</text>
+      <text x="272" y="396" text-anchor="middle" fill="#2a0a0a" font-size="11" font-weight="700">Joshua Tree</text>
+
+      <!-- Los Angeles D10-12 -->
+      <circle cx="188" cy="363" r="19" fill="#e94560" stroke="white" stroke-width="2.5"/>
+      <text x="188" y="359" text-anchor="middle" fill="white" font-size="10" font-weight="700">D10</text>
+      <text x="188" y="371" text-anchor="middle" fill="white" font-size="10" font-weight="700">-12</text>
+      <text x="188" y="389" text-anchor="middle" fill="#2a0a1a" font-size="12" font-weight="700">Los Angeles</text>
+
+      <!-- San Diego D13-14 optional -->
+      <circle cx="170" cy="442" r="15" fill="#e94560" stroke="white" stroke-width="2" opacity="0.7"/>
+      <text x="170" y="448" text-anchor="middle" fill="white" font-size="10" font-weight="700">D13</text>
+      <text x="148" y="464" text-anchor="middle" fill="#2a0a1a" font-size="11" font-weight="700">San Diego</text>
+      <text x="148" y="478" text-anchor="middle" fill="#666" font-size="10">✈️ 可选收尾</text>
+
+      <!-- END label -->
+      <rect x="138" y="345" width="36" height="15" rx="7" fill="#e94560"/>
+      <text x="156" y="356" text-anchor="middle" fill="white" font-size="9" font-weight="700">END</text>
+
+      <!-- Info box distances -->
+      <rect x="16" y="18" width="155" height="180" rx="11" fill="white" opacity="0.93"/>
+      <text x="29" y="40" fill="#1a1a2e" font-size="11" font-weight="700">主要驾车距离</text>
+      <text x="29" y="58" fill="#555" font-size="10">PHX → Sedona: 2h</text>
+      <text x="29" y="75" fill="#555" font-size="10">Sedona → 大峡谷: 2.5h</text>
+      <text x="29" y="92" fill="#555" font-size="10">大峡谷 → Page: 1.5h</text>
+      <text x="29" y="109" fill="#555" font-size="10">Page → Zion NP: 2.5h</text>
+      <text x="29" y="126" fill="#555" font-size="10">Zion → Las Vegas: 2.5h</text>
+      <text x="29" y="143" fill="#555" font-size="10">Vegas → Joshua Tree: 3.5h</text>
+      <text x="29" y="160" fill="#555" font-size="10">Joshua Tree → LA: 2h</text>
+      <text x="29" y="177" fill="#555" font-size="10">LA → San Diego: 2h</text>
+
+      <!-- Direction arrow -->
+      <path d="M630,480 L750,480" fill="none" stroke="#e94560" stroke-width="2"/>
+      <polygon points="750,475 762,480 750,485" fill="#e94560"/>
+      <text x="688" y="472" text-anchor="middle" fill="#e94560" font-size="10" font-weight="700">行进方向 东→西</text>
+    </svg>
+
+    <div class="legend-grid">
+      <div class="leg"><div class="leg-dot" style="background:#27ae60;">1-2</div><div class="leg-info"><h4>Scottsdale / Phoenix</h4><p>飞入PHX，朋友当天汇合</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#d35400;">3</div><div class="leg-info"><h4>Sedona</h4><p>红岩·灵气旋涡·艺术小镇</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#2980b9;">4-5</div><div class="leg-info"><h4>Grand Canyon + Page</h4><p>南缘日出·马蹄湾·Bright Angel</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#16a085;">6</div><div class="leg-info"><h4>Zion NP</h4><p>天使降落（抽签）·窄峡谷涉水</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#f39c12;">7-8</div><div class="leg-info"><h4>Las Vegas</h4><p>赌城大道·Sphere球幕·Red Rock</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#c0392b;">9</div><div class="leg-info"><h4>Joshua Tree NP</h4><p>沙漠奇石·星空·Keys View</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#e94560;">10-12</div><div class="leg-info"><h4>Los Angeles</h4><p>好莱坞·Getty·Santa Monica</p></div></div>
+      <div class="leg"><div class="leg-dot" style="background:#e94560;opacity:0.7">13-14</div><div class="leg-info"><h4>San Diego（可选）</h4><p>La Jolla·飞出SAN或LAX</p></div></div>
+    </div>
+
+    <div class="info-box">
+      <strong>👥 关于朋友行程的衔接：</strong>朋友住Arizona，Day 1飞抵PHX即汇合。可以一起玩 Day 1–8（Scottsdale → Sedona → 大峡谷 → Zion → Vegas），在 Las Vegas 是个自然告别点——朋友开车约4小时回Arizona，你继续向西去加州。如果朋友时间允许，LA 也可以一起去！
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DAYS ═══ -->
+<div id="pane-day" class="pane">
+  <div class="day-list">
+
+    <!-- D1-2 PHX -->
+    <div class="dc open" id="d-phx">
+      <div class="dc-head" onclick="tog('d-phx')">
+        <div class="dc-badge" style="background:#27ae60;">1-2</div>
+        <div class="dc-meta"><h3>Scottsdale / Phoenix · 与朋友汇合 🤝</h3><p>沙漠都市 · 骆驼山徒步 · Old Town · 沙漠植物园</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>Day 1（到达日）：</strong>飞机抵达PHX → 朋友接机或自取租车 → 下午稍作休整 → 傍晚 Old Town Scottsdale漫步，朋友带路本地最爱餐厅，庆祝汇合 🎉<br><br>
+          <strong>Day 2：</strong>清晨 6AM Camelback Mountain徒步（朋友带路，出发要早，避开高温）→ 中午 Desert Botanical Garden仙人掌花园 → 下午 Scottsdale Fashion Square购物/逛艺术画廊 → 傍晚泳池放松，为接下来的行程养精蓄锐
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/CamelbackMountain.jpg/800px-CamelbackMountain.jpg" alt="Camelback Mountain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🐫</div>
+            <div class="spot-info">
+              <h4>Camelback Mountain · 骆驼山</h4>
+              <p>凤凰城最著名徒步，Echo Canyon Trail极陡但顶部360°俯瞰整个大都市区，配上朋友带路最省心安全。</p>
+              <div class="tags"><span class="t ta">挑战徒步·全景</span><span class="t tw">⚠️ 9月高温，6AM前出发</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Desert_Botanical_Garden_saguaro.jpg/800px-Desert_Botanical_Garden_saguaro.jpg" alt="Desert Botanical Garden" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌵</div>
+            <div class="spot-info">
+              <h4>Desert Botanical Garden · 沙漠植物园</h4>
+              <p>全球最大沙漠植物收藏，50,000+株仙人掌，黄昏时巨大Saguaro映着橙红天空，极具视觉冲击力。票价$25。</p>
+              <div class="tags"><span class="t ta">摄影·植物</span><span class="t tg">傍晚光线最美</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Old_Town_Scottsdale_-_panoramio.jpg/800px-Old_Town_Scottsdale_-_panoramio.jpg" alt="Old Town Scottsdale" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🏘️</div>
+            <div class="spot-info">
+              <h4>Old Town Scottsdale · 旧城区</h4>
+              <p>西部牛仔历史街区，画廊、酒吧、餐厅林立，晚上热闹。让朋友带你去最地道的本地馆子，这才是Arizona的精髓。</p>
+              <div class="tags"><span class="t ta">夜生活·美食</span><span class="t tg">朋友带路最佳</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D3 SEDONA -->
+    <div class="dc" id="d-sed">
+      <div class="dc-head" onclick="tog('d-sed')">
+        <div class="dc-badge" style="background:#d35400;">3</div>
+        <div class="dc-meta"><h3>Sedona · 红岩塞多纳 🔴</h3><p>Cathedral Rock · 灵气旋涡 · 艺术村 · 日落</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>全天行程：</strong>PHX出发（2小时）→ 上午 Cathedral Rock徒步（Sedona最经典全景，1.2英里单程，约2-3h）→ 中午 Tlaquepaque Arts Village午餐+逛艺术品 → 下午 Bell Rock + Courthouse Butte环线（轻松步道，4英里，约2h）→ 傍晚 Airport Mesa Vortex看日落+感受灵气能量 → 住Sedona一晚
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Cathedral_Rock_from_Red_Rock_Crossing%2C_Sedona%2C_Arizona_-_May_2013.jpg/800px-Cathedral_Rock_from_Red_Rock_Crossing%2C_Sedona%2C_Arizona_-_May_2013.jpg" alt="Cathedral Rock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🔴</div>
+            <div class="spot-info">
+              <h4>Cathedral Rock · 大教堂岩</h4>
+              <p>Sedona最标志性红岩，清晨倒影在Oak Creek溪水中，是全美被拍摄最多的景点之一。徒步短但需手脚并用。</p>
+              <div class="tags"><span class="t ta">徒步·摄影</span><span class="t tg">清晨和日落最美</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Bell_Rock_and_Courthouse_Butte.jpg/800px-Bell_Rock_and_Courthouse_Butte.jpg" alt="Bell Rock" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🔔</div>
+            <div class="spot-info">
+              <h4>Bell Rock · 钟形岩</h4>
+              <p>Sedona四大灵气旋涡之一，形如巨钟，可攀爬至中段眺望全景。环线步道坡度平缓，两人同行轻松愉快。</p>
+              <div class="tags"><span class="t ta">轻松徒步·灵气</span><span class="t tw">停车需Red Rock Pass $5/天</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Tlaquepaque_Arts_Village_Sedona_Arizona.jpg/800px-Tlaquepaque_Arts_Village_Sedona_Arizona.jpg" alt="Tlaquepaque Village" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🎨</div>
+            <div class="spot-info">
+              <h4>Tlaquepaque Arts Village · 艺术村</h4>
+              <p>西班牙殖民风格露天艺术区，本地画廊+工坊+餐厅汇聚，购买特色纪念品最佳地点，午餐在此解决。</p>
+              <div class="tags"><span class="t ta">艺术·购物·午餐</span><span class="t tg">推荐 El Rincon 餐厅</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D4-5 GRAND CANYON -->
+    <div class="dc" id="d-gc">
+      <div class="dc-head" onclick="tog('d-gc')">
+        <div class="dc-badge" style="background:#2980b9;">4-5</div>
+        <div class="dc-meta"><h3>Grand Canyon + Horseshoe Bend 🏜️</h3><p>南缘日出震撼 · Bright Angel Trail · 马蹄湾</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>Day 4：</strong>Sedona出发（2.5h）→ 下午抵达大峡谷南缘 → Desert View Watchtower日落（视野广阔，游客少）→ 住Grand Canyon Village（El Tovar或附近旅馆）<br><br>
+          <strong>Day 5：</strong>清晨 5:30AM Mather Point日出（<strong>人生必看！</strong>）→ 上午 Bright Angel Trail下行至1.5英里凉亭折返（约3h）→ Rim Trail漫步 → 下午出发Page小镇（1.5h）→ 傍晚 Horseshoe Bend日落 → 住Page
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Dawn_on_the_S_rim_of_the_Grand_Canyon_%288645178272%29.jpg/800px-Dawn_on_the_S_rim_of_the_Grand_Canyon_%288645178272%29.jpg" alt="Grand Canyon Sunrise" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌄</div>
+            <div class="spot-info">
+              <h4>Mather Point 日出 · 人生必看</h4>
+              <p>大峡谷最经典观景台，日出时金光从1800米峡谷底部蔓延，9月日出约6:10。提前1小时到场占位，这是行程最震撼的一刻。</p>
+              <div class="tags"><span class="t ta">日出·震撼</span><span class="t tw">⚠️ 5:30AM出门</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Bright_Angel_trail_2010.jpg/800px-Bright_Angel_trail_2010.jpg" alt="Bright Angel Trail" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">⛰️</div>
+            <div class="spot-info">
+              <h4>Bright Angel Trail · 光明天使步道</h4>
+              <p>大峡谷最易走的下谷步道，建议走到1.5英里凉亭折返（3h），下容易上难。两人同行更安全，有朋友互相照应。</p>
+              <div class="tags"><span class="t ta">徒步·壮景</span><span class="t tw">⚠️ 带3L+水，勿过深</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Horseshoe_Bend_2018.jpg/800px-Horseshoe_Bend_2018.jpg" alt="Horseshoe Bend" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌈</div>
+            <div class="spot-info">
+              <h4>Horseshoe Bend · 马蹄湾</h4>
+              <p>科罗拉多河270°弯曲奇景，停车场步行20分钟即到，日落时橙金色绝美。全美最多人打卡景点之一，顺路必去。</p>
+              <div class="tags"><span class="t ta">打卡·摄影</span><span class="t tg">门票$10，黄昏光线最佳</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Desert_View_Watchtower.jpg/800px-Desert_View_Watchtower.jpg" alt="Desert View Watchtower" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🗼</div>
+            <div class="spot-info">
+              <h4>Desert View Watchtower · 沙漠瞭望塔</h4>
+              <p>大峡谷东缘最高建筑，视野比主观景台更广阔，游客更少，可看到科罗拉多河转弯，是Day4傍晚日落首选。</p>
+              <div class="tags"><span class="t ta">日落·全景</span><span class="t tg">距南缘入口约25英里</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D6 ZION -->
+    <div class="dc" id="d-zion">
+      <div class="dc-head" onclick="tog('d-zion')">
+        <div class="dc-badge" style="background:#16a085;">6</div>
+        <div class="dc-meta"><h3>Zion National Park · 锡安国家公园 ⛰️</h3><p>天使降落 · The Narrows涉水 · 犹他红岩峡谷</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>全天：</strong>Page出发（2.5h）→ 进入Zion → 上午 Angels Landing（若中签）或 Scout Lookout眺望（备选）→ 中午补给 → 下午 The Narrows涉水徒步（租防水靴$20，走2-3小时）→ 傍晚驱车Las Vegas（2.5h）→ 入住Strip酒店
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Angels_Landing_from_Scout_Lookout.jpg/800px-Angels_Landing_from_Scout_Lookout.jpg" alt="Angels Landing" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">⛰️</div>
+            <div class="spot-info">
+              <h4>Angels Landing · 天使降落</h4>
+              <p>最后500米扶铁链攀岩，俯瞰Zion Canyon壮阔全景。需提前抽签（recreation.gov），9月出行需3月前申请。朋友一起爬更安全！</p>
+              <div class="tags"><span class="t ta">极限徒步·全景</span><span class="t tw">⚠️ 必须提前3个月抽签</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/The_Narrows%2C_Zion_National_Park.jpg/800px-The_Narrows%2C_Zion_National_Park.jpg" alt="The Narrows" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">💧</div>
+            <div class="spot-info">
+              <h4>The Narrows · 窄峡谷涉水</h4>
+              <p>Virgin河穿越红色砂岩峡谷，最窄处仅6米，9月水位适中是最佳时节，涉水徒步是独一无二的体验，园区租防水靴$20。</p>
+              <div class="tags"><span class="t ta">涉水徒步·奇景</span><span class="t tg">9月最佳水位</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D7-8 LAS VEGAS -->
+    <div class="dc" id="d-lv">
+      <div class="dc-head" onclick="tog('d-lv')">
+        <div class="dc-badge" style="background:#f39c12;">7-8</div>
+        <div class="dc-meta"><h3>Las Vegas · 拉斯维加斯 🎰</h3><p>赌城大道 · Sphere球幕 · Red Rock Canyon自驾</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>Day 7：</strong>Zion抵Vegas（前夜已入住）→ 上午补觉休整 → 下午逛各大酒店（Bellagio喷泉免费，Venetian运河）→ 傍晚 Fremont Street霓虹拱廊（Old Vegas氛围）→ 晚上 The Sphere球幕体验（强推！）<br><br>
+          <strong>Day 8：</strong>上午 Red Rock Canyon自驾环路（30分钟出发，绝美反差）→ 下午 High Roller摩天轮 → 晚上Strip购物夜景 → <strong>与朋友告别</strong>（朋友开车回Arizona约4h），你次日继续加州
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Las_Vegas_Strip_at_night.jpg/800px-Las_Vegas_Strip_at_night.jpg" alt="Las Vegas Strip" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌃</div>
+            <div class="spot-info">
+              <h4>Las Vegas Strip · 赌城大道夜景</h4>
+              <p>4.2英里霓虹大道，Bellagio音乐喷泉每30分钟一次（完全免费），Venetian运河，夜晚比白天更震撼。白天逛酒店大堂也很壮观。</p>
+              <div class="tags"><span class="t ta">夜景·娱乐·购物</span><span class="t tg">Bellagio喷泉完全免费</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/MSG_Sphere_Las_Vegas_-_exterior.jpg/800px-MSG_Sphere_Las_Vegas_-_exterior.jpg" alt="The Sphere" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🔮</div>
+            <div class="spot-info">
+              <h4>The Sphere · 球幕剧场</h4>
+              <p>2023年开幕，全球最大270°沉浸式球幕，视觉效果彻底颠覆认知，Vegas最新必体验项目。$100-200/人，提前2周购票。</p>
+              <div class="tags"><span class="t ta">沉浸体验·震撼</span><span class="t tw">⚠️ 提前2周购票</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Red_Rock_Canyon_NV.jpg/800px-Red_Rock_Canyon_NV.jpg" alt="Red Rock Canyon" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🏔️</div>
+            <div class="spot-info">
+              <h4>Red Rock Canyon · 红岩峡谷</h4>
+              <p>距Strip仅30分钟，2000英尺砂岩绝壁，13英里自驾环路，与Vegas的浮华形成极致反差。门票$15/车，早晨光最好。</p>
+              <div class="tags"><span class="t ta">自驾·徒步</span><span class="t tg">早晨光线最好</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D9 JOSHUA TREE -->
+    <div class="dc" id="d-jt">
+      <div class="dc-head" onclick="tog('d-jt')">
+        <div class="dc-badge" style="background:#c0392b;">9</div>
+        <div class="dc-meta"><h3>Joshua Tree NP · 约书亚树国家公园 🌵</h3><p>沙漠奇石 · Keys View日落 · 星空摄影圣地</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>全天：</strong>Vegas出发（3.5h）→ 途经Palm Springs午餐（可选Palm Springs Aerial Tramway缆车，30分钟登顶，温差20°C）→ 下午进入Joshua Tree → Skull Rock奇石群（轻松步道）→ Cholla Cactus Garden → 傍晚 Keys View日落（全园最佳观景点）→ 夜晚在园内或29 Palms住宿，夜看星空（9月晴天率极高）
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Joshua_Tree_-_Rock_formation_in_Hidden_Valley_%287380457482%29.jpg/800px-Joshua_Tree_-_Rock_formation_in_Hidden_Valley_%287380457482%29.jpg" alt="Joshua Tree" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌵</div>
+            <div class="spot-info">
+              <h4>Joshua Tree NP · 核心奇石区</h4>
+              <p>两种沙漠生态交汇，巨型约书亚树+花岗岩抱团巨石，全球最著名星空摄影地，9月夜空能见度极高，月夜无光害。</p>
+              <div class="tags"><span class="t ta">摄影·星空·徒步</span><span class="t tw">带足3L+饮水，园内无商店</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Keys_View_overlook%2C_Joshua_Tree_NP_2013.jpg/800px-Keys_View_overlook%2C_Joshua_Tree_NP_2013.jpg" alt="Keys View" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌅</div>
+            <div class="spot-info">
+              <h4>Keys View · 全园最佳观景点</h4>
+              <p>海拔1,583米，俯瞰Coachella Valley和Salton Sea，天气好时可见墨西哥境内山峰，日落时分橙紫天空壮阔。免费，停车场大。</p>
+              <div class="tags"><span class="t ta">日落·全景</span><span class="t tg">免费，开车直达</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D10-12 LA -->
+    <div class="dc" id="d-la">
+      <div class="dc-head" onclick="tog('d-la')">
+        <div class="dc-badge" style="background:#e94560;">10-12</div>
+        <div class="dc-meta"><h3>Los Angeles · 洛杉矶 🎬</h3><p>好莱坞 · Getty Center · Santa Monica · Venice Beach</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>Day 10：</strong>Joshua Tree出发（2h）→ 抵达LA入住 → 下午 Santa Monica Pier + 海滩 → 傍晚 Venice Beach + Abbot Kinney（文青街）→ 海边晚餐，正式踏上西海岸<br><br>
+          <strong>Day 11：</strong>上午 Getty Center（10点前到避开停车排队）→ 下午 好莱坞星光大道+中国剧院手印 → 傍晚 Griffith Observatory日落（城市全景）<br><br>
+          <strong>Day 12：</strong>上午 Rodeo Drive逛街 → 中午 The Grove购物 → 下午 LACMA艺术博物馆（Urban Light装置必拍）→ 晚上庆祝行程收尾，选一家好餐厅好好吃一顿
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Griffith_Observatory%2C_Los_Angeles.jpg/800px-Griffith_Observatory%2C_Los_Angeles.jpg" alt="Griffith Observatory" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🔭</div>
+            <div class="spot-info">
+              <h4>Griffith Observatory · 格里菲斯天文台</h4>
+              <p>俯瞰LA全城最佳位置，好莱坞标志近在眼前，日落时城市灯光与夕阳同框。停车位极少，需提前在官网预约停车或乘摆渡车。</p>
+              <div class="tags"><span class="t ta">景观·天文</span><span class="t tw">停车需提前预约</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Getty_Center_Museum_viewed_from_tram.jpg/800px-Getty_Center_Museum_viewed_from_tram.jpg" alt="Getty Center" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🏛️</div>
+            <div class="spot-info">
+              <h4>Getty Center · 盖提中心</h4>
+              <p>世界级免费博物馆（停车$20），收藏梵高·莫奈·伦勃朗原作，建筑本身获AIA大奖，俯瞰LA全城。10点前到避开拥堵。</p>
+              <div class="tags"><span class="t ta">艺术·建筑·免费入馆</span><span class="t tw">10AM前到避开停车排队</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Santa_Monica_Pier_%282011%29.jpg/800px-Santa_Monica_Pier_%282011%29.jpg" alt="Santa Monica Pier" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌊</div>
+            <div class="spot-info">
+              <h4>Santa Monica Pier · 圣莫尼卡码头</h4>
+              <p>Route 66终点，海边游乐园，日落时太平洋金光染天。9月水温25°C最舒适，历经沙漠之旅后在此泡脚吹风，是完美的疗愈时刻。</p>
+              <div class="tags"><span class="t ta">海滩·日落·Route 66</span><span class="t tg">9月最宜人</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D13-14 SAN DIEGO -->
+    <div class="dc" id="d-sd">
+      <div class="dc-head" onclick="tog('d-sd')">
+        <div class="dc-badge" style="background:#8e44ad;">13-14</div>
+        <div class="dc-meta"><h3>San Diego · 圣地亚哥（可选）🌴</h3><p>La Jolla海豹湾 · Balboa Park · Coronado Island · 飞回</p></div>
+        <span class="dc-arrow">▾</span>
+      </div>
+      <div class="dc-body">
+        <div class="day-plan">
+          <strong>Day 13：</strong>LA出发（2h）→ La Jolla Cove近距离看海豹+可浮潜 → 下午 Balboa Park（内有圣地亚哥动物园）→ 晚上 Gaslamp Quarter夜生活<br><br>
+          <strong>Day 14：</strong>上午 Old Town San Diego历史区→ 渡轮到 Coronado Island（可选，优美海滩+Hotel del Coronado百年建筑）→ 下午 SAN机场还车，飞回（也可改回LAX还车飞回）
+        </div>
+        <div class="spots">
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/La_Jolla_Cove_2016b.jpg/800px-La_Jolla_Cove_2016b.jpg" alt="La Jolla Cove" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🦭</div>
+            <div class="spot-info">
+              <h4>La Jolla Cove · 海豹礁湾</h4>
+              <p>加州最美海岸线之一，海豹在礁石上晒太阳，碧绿海水适合浮潜，9月水温25°C最舒适，是整个行程最温柔的收尾。</p>
+              <div class="tags"><span class="t ta">浮潜·海豹·摄影</span><span class="t tg">9月绝佳时节</span></div>
+            </div>
+          </div>
+          <div class="spot">
+            <img class="spot-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Balboa_Park_2018-04-02.jpg/800px-Balboa_Park_2018-04-02.jpg" alt="Balboa Park" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="spot-fallback" style="display:none">🌿</div>
+            <div class="spot-info">
+              <h4>Balboa Park · 巴尔博亚公园</h4>
+              <p>全美最大城市公园之一，西班牙殖民建筑群，内含圣地亚哥动物园、15个博物馆，下午随意散步就很美。</p>
+              <div class="tags"><span class="t ta">公园·博物馆·动物园</span><span class="t tg">部分博物馆周二免费</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ HOTELS ═══ -->
+<div id="pane-hotel" class="pane">
+
+  <div class="city-block">
+    <div class="city-hd">🌵 Scottsdale / Phoenix · Day 1-2</div>
+    <div class="hf-cols">
+      <div class="hf-card">
+        <h3>🏨 推荐住宿</h3>
+        <div class="hf-item">
+          <div class="hf-name">Hotel Valley Ho <span class="price p2">$$</span></div>
+          <div class="hf-sub">Old Town Scottsdale核心，步行至所有餐厅</div>
+          <div class="hf-why">1956年复古中世纪风格，泳池派对氛围，朋友接机后第一晚最佳选择，$180-280/晚。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">The Phoenician <span class="price p3">$$$</span></div>
+          <div class="hf-sub">Camelback Mountain脚下，顶级沙漠度假村</div>
+          <div class="hf-why">11个泳池（含仙人掌泳池），世界级SPA，与朋友相聚第一站就享受最高规格，$400+/晚。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Graduate Scottsdale <span class="price p2">$$</span></div>
+          <div class="hf-sub">Old Town内，性价比之选</div>
+          <div class="hf-why">活泼设计风格，泳池棒，$130-180/晚，位置极佳，步行5分钟到Old Town所有餐厅。</div>
+        </div>
+      </div>
+      <div class="hf-card">
+        <h3>🍽️ 推荐餐厅</h3>
+        <div class="hf-item">
+          <div class="hf-name">让朋友带路！ <span class="price p1">$</span></div>
+          <div class="hf-sub">本地人才知道的隐藏好味道</div>
+          <div class="hf-why">朋友住Arizona，最了解当地真正好吃的地方。Scottsdale的墨西哥食物是全美最正宗，让朋友决定第一顿去哪。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">FnB Restaurant <span class="price p2">$$</span></div>
+          <div class="hf-sub">James Beard奖主厨 · Arizona本地食材</div>
+          <div class="hf-why">Charleen Badman主厨，主推本地农场蔬菜创意菜，素食天堂，$60/人，需提前预约。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Cafe Monarch <span class="price p3">$$$</span></div>
+          <div class="hf-sub">隐秘精致法餐 · 仅12桌</div>
+          <div class="hf-why">与朋友重聚的第一顿正式晚餐首选，5道固定菜单$120+，提前2周预订。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-block">
+    <div class="city-hd">🔴 Sedona · Day 3</div>
+    <div class="hf-cols">
+      <div class="hf-card">
+        <h3>🏨 推荐住宿</h3>
+        <div class="hf-item">
+          <div class="hf-name">Enchantment Resort <span class="price p3">$$$</span></div>
+          <div class="hf-sub">Boynton Canyon峡谷内，顶级沙漠度假村</div>
+          <div class="hf-why">被红岩三面环抱，自带世界级SPA Mii amo，从房间望出去就是橙红峡谷，$400+/晚，一生一次。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">L'Auberge de Sedona <span class="price p3">$$$</span></div>
+          <div class="hf-sub">Oak Creek溪边，法式精品酒店</div>
+          <div class="hf-why">溪畔小屋设计，餐厅就在溪边，Sedona最浪漫的住宿体验，$350-500/晚。</div>
+        </div>
+      </div>
+      <div class="hf-card">
+        <h3>🍽️ 推荐餐厅</h3>
+        <div class="hf-item">
+          <div class="hf-name">Mariposa Latin Inspired Grill <span class="price p3">$$$</span></div>
+          <div class="hf-sub">180°全景红岩景观餐厅</div>
+          <div class="hf-why">窗外Cathedral Rock，日落时橙红岩壁+精致拉丁菜肴，Sedona最美的一餐。需提前预约。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Elote Cafe <span class="price p2">$$</span></div>
+          <div class="hf-sub">Sedona最受欢迎墨西哥餐厅，不接受预约</div>
+          <div class="hf-why">招牌烤玉米+松露调味，$35-50/人，仅晚餐，5PM前排队，绝对值得等待。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-block">
+    <div class="city-hd">🏜️ Grand Canyon · Day 4-5</div>
+    <div class="hf-cols">
+      <div class="hf-card">
+        <h3>🏨 推荐住宿</h3>
+        <div class="hf-item">
+          <div class="hf-name">El Tovar Hotel <span class="price p3">$$$</span></div>
+          <div class="hf-sub">大峡谷南缘内，1905年历史建筑</div>
+          <div class="hf-why">步行100米是峡谷边缘，深夜独坐崖边无法言说，住宿最高境界。需提前4-6个月预订！</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Best Western Lake Powell (Page) <span class="price p2">$$</span></div>
+          <div class="hf-sub">Page小镇，Horseshoe Bend出发点</div>
+          <div class="hf-why">Day5看完马蹄湾就近住，$100-150/晚，次日直奔Zion路线顺畅，Lake Powell景色加分。</div>
+        </div>
+      </div>
+      <div class="hf-card">
+        <h3>🍽️ 推荐餐厅</h3>
+        <div class="hf-item">
+          <div class="hf-name">El Tovar Dining Room <span class="price p3">$$$</span></div>
+          <div class="hf-sub">窗外就是峡谷，大峡谷内唯一精致餐厅</div>
+          <div class="hf-why">与朋友对视着大峡谷用餐，氛围绝无仅有，牛排/鲑鱼$35-55。需提前预约。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Ken's Old West (Page) <span class="price p1">$</span></div>
+          <div class="hf-sub">Page小镇最佳，本地BBQ</div>
+          <div class="hf-why">烤肋排$25，Page居民常来，看完马蹄湾大快朵颐的完美选择。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-block">
+    <div class="city-hd">🎰 Las Vegas · Day 7-8</div>
+    <div class="hf-cols">
+      <div class="hf-card">
+        <h3>🏨 推荐住宿</h3>
+        <div class="hf-item">
+          <div class="hf-name">The Venetian Resort <span class="price p3">$$$</span></div>
+          <div class="hf-sub">Strip中段，全套房，威尼斯主题</div>
+          <div class="hf-why">房间全部套房（70㎡+），威尼斯运河穿行，赌场购物餐厅一体，$180-300/晚，两人拼房很划算。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Park MGM <span class="price p2">$$</span></div>
+          <div class="hf-sub">Strip南段，无烟区，现代设计</div>
+          <div class="hf-why">Vegas少见的无烟设计酒店，睡眠质量更好，$120-200/晚，近T-Mobile Arena。</div>
+        </div>
+      </div>
+      <div class="hf-card">
+        <h3>🍽️ 推荐餐厅</h3>
+        <div class="hf-item">
+          <div class="hf-name">Joël Robuchon <span class="price p3">$$$</span></div>
+          <div class="hf-sub">法式米其林3星 · MGM Grand</div>
+          <div class="hf-why">Vegas唯一3星米其林，套餐$165+，与朋友在Vegas的最后晚餐，记忆终生。提前1周预订。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Secret Pizza <span class="price p1">$</span></div>
+          <div class="hf-sub">Cosmopolitan 3楼隐藏餐厅，无路牌</div>
+          <div class="hf-why">Vegas最著名隐藏美食，NY风格薄饼$6/片，深夜2AM还开，必须去寻找一次。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Bouchon Bistro <span class="price p2">$$</span></div>
+          <div class="hf-sub">Thomas Keller法式小酒馆 · Venetian</div>
+          <div class="hf-why">大厨Thomas Keller出品，牡蛎·羊排·鸡蛋料理，Vegas最好的正餐之一，$60-80/人。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="city-block">
+    <div class="city-hd">🎬 Los Angeles · Day 10-12</div>
+    <div class="hf-cols">
+      <div class="hf-card">
+        <h3>🏨 推荐住宿</h3>
+        <div class="hf-item">
+          <div class="hf-name">Shutters on the Beach <span class="price p3">$$$</span></div>
+          <div class="hf-sub">Santa Monica海滩正对面</div>
+          <div class="hf-why">推开窗就是太平洋，沙漠旅程后在此犒赏自己，$400+/晚，最后几天的奢华收尾。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Hotel Figueroa <span class="price p2">$$</span></div>
+          <div class="hf-sub">Downtown · 西班牙摩尔风格 · 泳池好</div>
+          <div class="hf-why">性价比之选，$150-220/晚，泳池区氛围极好，距LACMA和The Grove便利。</div>
+        </div>
+      </div>
+      <div class="hf-card">
+        <h3>🍽️ 推荐餐厅</h3>
+        <div class="hf-item">
+          <div class="hf-name">Nobu Malibu <span class="price p3">$$$</span></div>
+          <div class="hf-sub">日本料理 · Malibu海边 · 面朝太平洋</div>
+          <div class="hf-why">松下信幸招牌，木桌席对着太平洋，黑鳕鱼味噌必点，$80+/人，提前1周预订。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Gjusta <span class="price p1">$</span></div>
+          <div class="hf-sub">烘焙早午餐 · Venice本地最爱</div>
+          <div class="hf-why">LA最潮面包店，三明治+咖啡$20，Venice海滩旁最地道的LA早餐体验。</div>
+        </div>
+        <div class="hf-item">
+          <div class="hf-name">Bestia <span class="price p2">$$</span></div>
+          <div class="hf-sub">意大利餐 · Downtown仓库区</div>
+          <div class="hf-why">LA最难预约的餐厅之一，手工意面+意式烤肉绝佳，$70/人，需提前3-4周预订。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ TIPS ═══ -->
+<div id="pane-tips" class="pane">
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">✈️</div>
+      <h4>航班安排</h4>
+      <p>飞入PHX（Phoenix Sky Harbor），飞出LAX或SAN（圣地亚哥）。PHX直航多，价格通常比LAX便宜。建议早班抵达，当天下午即与朋友汇合。</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🚗</div>
+      <h4>租车建议</h4>
+      <p>PHX机场取车，LAX或SAN还车（单程附加费$100-200）。推荐Toyota RAV4或Jeep Cherokee。全程约1,600英里，9天左右自驾。</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🏞️</div>
+      <h4>国家公园通票</h4>
+      <p>America the Beautiful Pass $80/年，覆盖Joshua Tree、Zion、Grand Canyon全部3个国家公园，单独购票超过$70，必买！</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎫</div>
+      <h4>提前预订清单</h4>
+      <p>① Angels Landing抽签（<strong>提前3个月</strong>，recreation.gov）② El Tovar Hotel（<strong>提前4-6个月</strong>）③ The Sphere票（2周前）④ Mariposa/Nobu/Bestia（各1-3周前）</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🌡️</div>
+      <h4>9月各地气候</h4>
+      <p>Scottsdale/PHX：36°C（务必清晨徒步）/ Sedona：30°C宜人 / 大峡谷顶部：25°C，谷底35°C+ / Zion：28°C / Vegas：38°C白天 / Joshua Tree：32°C / LA：25°C清爽</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💧</div>
+      <h4>沙漠安全第一</h4>
+      <p>每人户外活动备3L+饮水。大峡谷切勿当天往返谷底。Camelback Mountain 9月极热，必须6AM前出发。Joshua Tree园内无商店，提前备好所有食水。</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📱</div>
+      <h4>离线地图必备</h4>
+      <p>提前下载Google Maps离线地图（Arizona+Utah+Nevada+California）。Joshua Tree、Zion园区内手机信号极差。建议准备实体地图作备份。</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💰</div>
+      <h4>预算参考（/人）</h4>
+      <p>住宿：$1,500-2,500 / 餐饮：$800-1,200 / 门票活动：$400-600 / 油费：$150 / 合计约 $3,000-4,500/人（不含国际机票）</p>
+    </div>
+  </div>
+
+  <div class="checklist" style="margin-top:16px;">
+    <h3>📋 出发前行动清单</h3>
+    <ul class="checklist">
+      <li>购买 America the Beautiful 国家公园通票 $80（recreation.gov）</li>
+      <li>抽签 Angels Landing permit（Zion）— 每季度开放，9月出行需约3月申请</li>
+      <li>预订 El Tovar Hotel 或 Bright Angel Lodge（大峡谷内）— 提前4-6个月</li>
+      <li>购买 The Sphere 门票（Las Vegas）— 提前2周</li>
+      <li>预订餐厅：Mariposa Sedona / Nobu Malibu / Bestia LA（各提前1-3周）</li>
+      <li>租车确认 PHX取车 → LAX/SAN还车（单程费用，one-way drop-off）</li>
+      <li>准备国际驾照 + 中国驾照原件（美国自驾两证均需）</li>
+      <li>下载 Google Maps 离线地图（4个州区域）</li>
+      <li>购买旅行险（含驾车险、医疗险）</li>
+      <li>告知朋友你的航班信息，确认PHX接机或取车安排</li>
+    </ul>
+  </div>
+
+  <div class="info-box" style="margin-top:16px;">
+    <strong>👥 朋友行程衔接建议：</strong><br>
+    朋友住Arizona，建议全程陪同 Day 1–8（Scottsdale → Sedona → 大峡谷 → Zion → Vegas）。<strong>Las Vegas 是最自然的告别点</strong>——朋友从Vegas开车约4小时回Phoenix，你则第二天继续向西前往Joshua Tree和LA。<br><br>
+    如果朋友愿意多请几天假，<strong>LA段也强烈推荐一起去</strong>！Malibu、Venice、Griffith都是两个人一起更有趣的地方。
+  </div>
+</div>
+
+<script>
+function showTab(name, el) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('pane-' + name).classList.add('active');
+  el.classList.add('active');
+}
+function tog(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
