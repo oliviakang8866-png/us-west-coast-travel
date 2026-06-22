@@ -115,6 +115,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   .tl-photo { width: 160px; height: 120px; }
   .tl-left { width: 52px; }
 }
+
+/* ── route map ── */
+.route-map{display:flex;flex-wrap:wrap;align-items:center;gap:4px;background:#f0f4ff;border-radius:10px;padding:10px 14px;margin:12px 0;font-size:12px;}
+.rm-stop,.rm-hotel{display:flex;flex-direction:column;align-items:center;background:white;border-radius:8px;padding:5px 9px;min-width:80px;text-align:center;border:1px solid #dde;}
+.rm-hotel{background:#e8f5e9;border-color:#a5d6a7;}
+.rm-icon{font-size:16px;}
+.rm-label{font-size:11px;font-weight:700;color:#1a1a2e;margin-top:2px;}
+.rm-info{font-size:10px;color:#888;margin-top:1px;}
+.rm-arrow{color:#aaa;font-size:16px;font-weight:700;}
+.rm-link{margin-left:auto;font-size:11px;color:#1a73e8;text-decoration:none;white-space:nowrap;padding:4px 8px;background:white;border-radius:6px;border:1px solid #dde;}
+/* ── hotel badge ── */
+.hotel-badge{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;color:#2e7d32;margin:10px 0 4px;}
+/* ── hike badge ── */
+.hike-badge{display:inline-block;background:#fff3e0;border:1px solid #ffcc80;border-radius:12px;padding:2px 9px;font-size:11px;font-weight:600;color:#e65100;margin-left:8px;}
+/* ── note boxes ── */
+.nb-warn,.nb-info,.nb-tip{border-radius:7px;padding:6px 10px;font-size:12px;margin:5px 0;line-height:1.5;}
+.nb-warn{background:#fff3cd;color:#856404;border-left:3px solid #ffc107;}
+.nb-info{background:#e3f2fd;color:#1565c0;border-left:3px solid #64b5f6;}
+.nb-tip{background:#e8f5e9;color:#2e7d32;border-left:3px solid #81c784;}
+/* ── photo row ── */
+.ph-row{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+.ph-row::-webkit-scrollbar{display:none;}
+.ph-wrap{position:relative;flex-shrink:0;}
+.ph{width:220px;height:150px;object-fit:cover;display:block;}
+.ph-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.6));color:white;font-size:10px;padding:12px 6px 4px;}
+.ph-err{width:220px;height:150px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:36px;}
 </style>
 </head>
 <body>
@@ -269,357 +295,688 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
 <!-- ═══ DAYS ═══ -->
 <div id="pane-day" class="pane">
+
+<!-- HIKING SUMMARY -->
+<div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:12px;padding:16px 20px;margin-bottom:20px;">
+<h3 style="font-size:14px;font-weight:700;margin-bottom:10px;">🥾 全程徒步时间汇总</h3>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;font-size:12px;">
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 2</b> Camelback Mountain<br><span style="color:#e65100;">约 3-4 小时（高强度）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 3</b> Cathedral Rock + Bell Rock<br><span style="color:#e65100;">约 4 小时（中等）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 4</b> Rim Trail漫步<br><span style="color:#4caf50;">约 1.5 小时（轻松）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 5</b> Bright Angel Trail<br><span style="color:#e65100;">约 3 小时（中等）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 5</b> Horseshoe Bend步行<br><span style="color:#4caf50;">约 40 分钟（轻松）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 6</b> Angels Landing<br><span style="color:#f44336;font-weight:700;">约 4 小时（高强度·抽签）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 6</b> The Narrows涉水<br><span style="color:#e65100;">约 2.5 小时（中等）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 8</b> Red Rock短途<br><span style="color:#4caf50;">约 1 小时（轻松）</span></div>
+<div style="background:white;border-radius:8px;padding:8px 10px;"><b>Day 9</b> Skull Rock等<br><span style="color:#4caf50;">约 2 小时（轻松）</span></div>
+</div>
+<div style="margin-top:12px;font-size:13px;font-weight:700;">合计约 <span style="color:#e65100;">22–24 小时</span>徒步，集中在 Day 2、3、5、6。其余天基本是自驾+城市漫步，非常轻松。</div>
+</div>
+
 <div class="day-list">
 <div class="dc" id="d1">
 <div class="dc-head" onclick="tog('d1')">
   <div class="dc-badge" style="background:#27ae60;">Day 1</div>
-  <div class="dc-meta"><h3>抵达 Scottsdale · 与朋友汇合 🤝</h3><p>PHX落地 · 取租车 · Old Town庆祝晚餐</p></div>
+  <div class="dc-meta">
+    <h3>抵达 Scottsdale · 与朋友汇合 🤝</h3>
+    <p>PHX落地 · 取租车 · Old Town庆祝 </p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Scottsdale市区酒店（推荐 Hotel Valley Ho 或 Graduate Scottsdale）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">PHX机场</span><span class="rm-info">取租车 15min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Scottsdale酒店</span><span class="rm-info">入住</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Old Town</span><span class="rm-info">步行5min</span></div><a class="rm-link" href="https://maps.google.com/?q=Old+Town+Scottsdale,AZ" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">✈️<br><span>下午 抵达</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">✈️<br><span>下午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Scottsdale Old Town街景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Scottsdale Old Town街景</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Desert_Botanical_Garden_SW01.jpg/330px-Desert_Botanical_Garden_SW01.jpg" alt="Arizona沙漠气息" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Arizona沙漠气息</span></div></div>
-    <div class="tl-text"><h4>飞抵 PHX · 朋友接机</h4><p>落地Phoenix Sky Harbor机场，朋友接机（或自取租车，推荐Toyota RAV4）。办好入住，稍作休整，准备14天大冒险的开始！</p><div class="tags"><span class="t ta">到达日</span><span class="t ta">取车·入住</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Scottsdale Old Town全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Scottsdale Old Town全景</span></div></div>
+    <div class="tl-text">
+      <h4>飞抵PHX · 朋友接机 · 取租车</h4><p>落地Phoenix Sky Harbor机场，租车（推荐Toyota RAV4，适合后续沙漠公路）。朋友可来接机，一起办入住。</p>
+      <div class="nb-tip">✅ 租车：PHX机场取，最后在PHX或SAN还。提前网上预订，9月旺季车价$50-80/天</div>
+      <div class="tags"><span class="t ta">到达日</span><span class="t ta">取车</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌆<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Old Town Scottsdale" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Old Town Scottsdale</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="旧城西部风格街道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">旧城西部风格街道</span></div></div>
-    <div class="tl-text"><h4>Old Town Scottsdale · 与朋友相聚庆祝</h4><p>让朋友带路去最地道的本地餐厅，西部牛仔历史街区，画廊、酒吧、餐厅林立，晚上热闹非凡，这里才是Arizona灵魂所在。</p><div class="tags"><span class="t ta">首日聚餐</span><span class="t ta">朋友带路</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌆<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Old Town街道西部风情" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Old Town街道西部风情</span></div></div>
+    <div class="tl-text">
+      <h4>Old Town Scottsdale · 第一顿：朋友带路</h4><p>让朋友带路去最地道的本地餐厅——Scottsdale的墨西哥食物全美最正宗，西部牛仔历史街区，画廊酒吧林立。</p>
+      <div class="nb-tip">✅ 朋友最了解当地隐藏美食，这顿饭不要自己订，听朋友的！</div>
+      <div class="tags"><span class="t ta">首日聚餐</span><span class="t ta">朋友带路</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d2">
 <div class="dc-head" onclick="tog('d2')">
   <div class="dc-badge" style="background:#27ae60;">Day 2</div>
-  <div class="dc-meta"><h3>Scottsdale 沙漠都市 🌵</h3><p>骆驼山 · 仙人掌花园 · 旧城漫步</p></div>
+  <div class="dc-meta">
+    <h3>Scottsdale 沙漠都市 🌵</h3>
+    <p>骆驼山徒步 · 仙人掌花园 · 旧城 <span class="hike-badge">🥾 徒步约 约3-4小时（Camelback难度高）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：同Day1，继续住Scottsdale</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Scottsdale酒店</span><span class="rm-info">出发</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Camelback Mountain</span><span class="rm-info">10min 车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Desert Botanical Garden</span><span class="rm-info">20min 车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Old Town</span><span class="rm-info">5min 车程</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Scottsdale酒店</span><span class="rm-info">回程</span></div><a class="rm-link" href="https://maps.google.com/?q=Camelback+Mountain,Phoenix,AZ" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌅<br><span>清晨 6AM</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌅<br><span>清晨 6:00AM</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Camelback_Mountain_2.jpg/330px-Camelback_Mountain_2.jpg" alt="Camelback Mountain全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Camelback Mountain全景</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Camelback_Mountain_2.jpg/330px-Camelback_Mountain_2.jpg" alt="Echo Canyon Trail步道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Echo Canyon Trail步道</span></div></div>
-    <div class="tl-text"><h4>Camelback Mountain · 骆驼山徒步</h4><p>凤凰城最著名徒步，Echo Canyon Trail极陡，海拔821米，顶部360°俯瞰整个大都市区。有朋友同行更安全。9月必须6AM前出发避开酷热。</p><div class="tags"><span class="t ta">挑战徒步</span><span class="t ta">全景俯瞰</span><span class="t tw">⚠️ 9月高温，6AM前出发，带2L水</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Camelback_Mountain_2.jpg/330px-Camelback_Mountain_2.jpg" alt="Camelback Mountain全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Camelback Mountain全景</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Camelback_Mountain_Echo_Canyon.jpg/330px-Camelback_Mountain_Echo_Canyon.jpg" alt="Echo Canyon Trail步道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Echo Canyon Trail步道</span></div></div>
+    <div class="tl-text">
+      <h4>Camelback Mountain · 骆驼山 Echo Canyon Trail</h4><p>全程约3英里往返，上升约500米，极陡但顶部360°俯瞰大都市区。两人同行更安全，有朋友陪伴。</p>
+      <div class="nb-warn">⚠️ ⚠️ 9月仍高温，必须6AM前出发。停车场7点前就满，Cholla Trailhead停车更多</div><div class="nb-tip">✅ 停车免费，徒步免费，带2L以上饮水</div>
+      <div class="tags"><span class="t ta">挑战级徒步</span><span class="t ta">3英里往返</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">☀️<br><span>上午 结束后</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">☀️<br><span>上午结束后</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Desert_Botanical_Garden_SW01.jpg/330px-Desert_Botanical_Garden_SW01.jpg" alt="Desert Botanical Garden仙人掌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Desert Botanical Garden仙人掌</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Desert_Botanical_Garden_SW01.jpg/330px-Desert_Botanical_Garden_SW01.jpg" alt="Saguaro巨人柱" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Saguaro巨人柱</span></div></div>
-    <div class="tl-text"><h4>Desert Botanical Garden · 沙漠植物园</h4><p>全球最大沙漠植物收藏，50,000+株仙人掌。黄昏时巨大Saguaro映着橙红天空，极具视觉冲击。票价$25。</p><div class="tags"><span class="t ta">摄影·植物</span><span class="t ta">票价$25</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Desert_Botanical_Garden_SW01.jpg/330px-Desert_Botanical_Garden_SW01.jpg" alt="Desert Botanical Garden温室区" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Desert Botanical Garden温室区</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/DBG_saguaro_detail.jpg/330px-DBG_saguaro_detail.jpg" alt="Saguaro仙人掌林" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Saguaro仙人掌林</span></div></div>
+    <div class="tl-text">
+      <h4>Desert Botanical Garden · 沙漠植物园</h4><p>50,000+株仙人掌，Saguaro巨人柱可达12米高，黄昏光线最美，但上午从骆驼山下来正好体力合适。</p>
+      <div class="nb-info">ℹ️ 门票$25，建议提前在官网购票，旺季可能排队</div><div class="nb-tip">✅ 周二对Maricopa县居民免费，但你们是游客，直接买票</div>
+      <div class="tags"><span class="t ta">摄影·植物</span><span class="t ta">票价$25</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌇<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Scottsdale Fashion Square" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Scottsdale Fashion Square</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Old Town夜晚" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Old Town夜晚</span></div></div>
-    <div class="tl-text"><h4>购物 & 泳池充电</h4><p>下午逛Scottsdale Fashion Square，傍晚泳池放松，为接下来10天的大行程养精蓄锐。</p><div class="tags"><span class="t ta">购物·放松</span><span class="t ta">泳池充电</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌇<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Old Town艺术画廊街" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Old Town艺术画廊街</span></div></div>
+    <div class="tl-text">
+      <h4>Old Town Scottsdale · 艺术逛街</h4><p>下午逛画廊或Scottsdale Fashion Square购物，傍晚泳池放松，为接下来旅程养精蓄锐。</p>
+      <div class="nb-info">ℹ️ 明天就要出发Sedona了，今晚别睡太晚，明天需早起</div>
+      <div class="tags"><span class="t ta">购物·放松</span><span class="t ta">充电休息</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d3">
 <div class="dc-head" onclick="tog('d3')">
   <div class="dc-badge" style="background:#d35400;">Day 3</div>
-  <div class="dc-meta"><h3>Sedona · 红岩小镇 🔴</h3><p>Cathedral Rock · 艺术村 · Bell Rock · 日落旋涡</p></div>
+  <div class="dc-meta">
+    <h3>Sedona · 红岩小镇 🔴</h3>
+    <p>Cathedral Rock · 艺术村 · Bell Rock · 旋涡日落 <span class="hike-badge">🥾 徒步约 约4小时（Cathedral Rock + Bell Rock各2小时）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Sedona市区（推荐 L'Auberge de Sedona 或 Sedona Rouge）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Scottsdale</span><span class="rm-info">出发 2h车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Cathedral Rock</span><span class="rm-info">30min徒步往返1.2英里</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Tlaquepaque艺术村</span><span class="rm-info">午餐10min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Bell Rock</span><span class="rm-info">环线4英里 2h</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Airport Mesa</span><span class="rm-info">日落20min</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Sedona酒店</span><span class="rm-info">住宿</span></div><a class="rm-link" href="https://maps.google.com/?q=Cathedral+Rock+Sedona+AZ" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🚗<br><span>早上 出发</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🚗<br><span>早上 出发</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cathedral_Rock_-_Sedona_AZ-1.jpg/330px-Cathedral_Rock_-_Sedona_AZ-1.jpg" alt="Cathedral Rock与Oak Creek倒影" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Cathedral Rock与Oak Creek倒影</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cathedral_Rock_-_Sedona_AZ-1.jpg/330px-Cathedral_Rock_-_Sedona_AZ-1.jpg" alt="Sedona红岩全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Sedona红岩全貌</span></div></div>
-    <div class="tl-text"><h4>PHX出发 → Sedona（2h） · Cathedral Rock</h4><p>Sedona标志性红岩，Oak Creek溪水前的晨间倒影是全美被拍摄最多的构图之一。步道1.2英里单程，短而陡，景色绝美。</p><div class="tags"><span class="t ta">徒步·摄影</span><span class="t ta">全美最多被拍场景</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cathedral_Rock_-_Sedona_AZ-1.jpg/330px-Cathedral_Rock_-_Sedona_AZ-1.jpg" alt="Cathedral Rock晨光倒影" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Cathedral Rock晨光倒影</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Cathedral_Rock_Sedona_Arizona_USA.jpg/330px-Cathedral_Rock_Sedona_Arizona_USA.jpg" alt="Cathedral Rock步道视角" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Cathedral Rock步道视角</span></div></div>
+    <div class="tl-text">
+      <h4>Scottsdale→Sedona（2h）· Cathedral Rock 徒步</h4><p>Oak Creek溪水倒影是全美被拍最多的构图之一，步道1.2英里短但很陡，最后一段需要手脚并用攀岩。</p>
+      <div class="nb-warn">⚠️ 停车需Red Rock Pass（$5/天 或 $15/周），在入口自动机器购买，也可提前在app购</div><div class="nb-warn">⚠️ Cathedral Rock停车场很小，8AM前就要到，否则需停远处步行</div>
+      <div class="tags"><span class="t ta">徒步·摄影</span><span class="t ta">难度中等</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌞<br><span>中午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌞<br><span>中午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tlaquepaque_Arts_%26_Shopping_Village.jpg/330px-Tlaquepaque_Arts_%26_Shopping_Village.jpg" alt="Tlaquepaque艺术村广场" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Tlaquepaque艺术村广场</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tlaquepaque_Arts_%26_Shopping_Village.jpg/330px-Tlaquepaque_Arts_%26_Shopping_Village.jpg" alt="艺术村露天画廊" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">艺术村露天画廊</span></div></div>
-    <div class="tl-text"><h4>Tlaquepaque Arts Village · 艺术村午餐</h4><p>西班牙殖民风格露天艺术区，本地画廊+工坊+餐厅，El Rincon墨西哥餐厅午餐推荐。购买特色纪念品的最佳地点。</p><div class="tags"><span class="t ta">艺术·午餐</span><span class="t ta">推荐El Rincon</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tlaquepaque_Arts_%26_Shopping_Village.jpg/330px-Tlaquepaque_Arts_%26_Shopping_Village.jpg" alt="Tlaquepaque艺术村广场" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Tlaquepaque艺术村广场</span></div></div>
+    <div class="tl-text">
+      <h4>Tlaquepaque Arts Village · 午餐</h4><p>西班牙殖民风格露天艺术区，本地画廊、工坊、餐厅汇集，El Rincon墨西哥餐厅午餐$20-30。</p>
+      <div class="nb-info">ℹ️ 无需订位，随到随入，但周末午餐时间可能排队15-20分钟</div>
+      <div class="tags"><span class="t ta">午餐·艺术</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌤️<br><span>下午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌤️<br><span>下午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sedona_Arizona-27527-6.jpg/330px-Sedona_Arizona-27527-6.jpg" alt="Bell Rock钟形红岩" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Bell Rock钟形红岩</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sedona_Arizona-27527-6.jpg/330px-Sedona_Arizona-27527-6.jpg" alt="Courthouse Butte远景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Courthouse Butte远景</span></div></div>
-    <div class="tl-text"><h4>Bell Rock + Courthouse Butte · 环线</h4><p>Sedona四大灵气旋涡之一，环线4英里平缓好走，红岩在午后阳光下呈现最饱和的橙红色。</p><div class="tags"><span class="t ta">轻松徒步</span><span class="t ta">灵气旋涡</span><span class="t tw">⚠️ 停车需Red Rock Pass $5/天</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Sedona_Arizona-27527-6.jpg/330px-Sedona_Arizona-27527-6.jpg" alt="Bell Rock钟形岩" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Bell Rock钟形岩</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/BellRockSedona.jpg/330px-BellRockSedona.jpg" alt="Bell Rock近景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Bell Rock近景</span></div></div>
+    <div class="tl-text">
+      <h4>Bell Rock + Courthouse Butte 环线徒步</h4><p>4英里环线，坡度平缓，红岩午后阳光下呈最饱和橙红色。Sedona四大灵气旋涡之一。</p>
+      <div class="nb-tip">✅ 同样需要Red Rock Pass（Day3已买）。停车场在Hwy 179路边，位置明显</div>
+      <div class="tags"><span class="t ta">轻松徒步 4英里</span><span class="t ta">灵气旋涡</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌅<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cathedral_Rock_-_Sedona_AZ-1.jpg/330px-Cathedral_Rock_-_Sedona_AZ-1.jpg" alt="Sedona日落红岩" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Sedona日落红岩</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Cathedral_Rock_-_Sedona_AZ-1.jpg/330px-Cathedral_Rock_-_Sedona_AZ-1.jpg" alt="Airport Mesa全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Airport Mesa全景</span></div></div>
-    <div class="tl-text"><h4>Airport Mesa Vortex · 日落 & 灵气</h4><p>全Sedona最佳日落观景点，夕阳把红岩染成深橙色，是行程里最治愈的时刻。住Sedona一晚。</p><div class="tags"><span class="t ta">日落·灵气</span><span class="t ta">拍照绝佳</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌅<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Sedona_Arizona_USA.jpg/330px-Sedona_Arizona_USA.jpg" alt="Sedona红岩日落全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Sedona红岩日落全景</span></div></div>
+    <div class="tl-text">
+      <h4>Airport Mesa Vortex · 日落</h4><p>Sedona最佳日落观景点，夕阳把红岩染成深橙色，不需要徒步，开车上去即可，逗留约1小时。</p>
+      <div class="nb-tip">✅ Airport Mesa停车免费，日落前30分钟就会挤满，提前到</div>
+      <div class="tags"><span class="t ta">日落·灵气</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d4">
 <div class="dc-head" onclick="tog('d4')">
   <div class="dc-badge" style="background:#2980b9;">Day 4</div>
-  <div class="dc-meta"><h3>Grand Canyon 抵达 · 南缘探索 🏜️</h3><p>Mather Point初见 · Rim Trail · Desert View日落</p></div>
+  <div class="dc-meta">
+    <h3>大峡谷 · 抵达南缘 🏜️</h3>
+    <p>Sedona出发 · Rim Trail漫步 · Desert View日落 <span class="hike-badge">🥾 徒步约 约1.5小时（Rim Trail平缓，算散步）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：大峡谷内（El Tovar Hotel最佳）或 Tusayan小镇（Grand Canyon Squire Inn）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Sedona</span><span class="rm-info">出发 2.5h车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">大峡谷南缘入口</span><span class="rm-info">缴费入园</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Mather Point</span><span class="rm-info">初见大峡谷</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Rim Trail</span><span class="rm-info">沿崖漫步</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Desert View Watchtower</span><span class="rm-info">日落 25英里</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Grand Canyon Village</span><span class="rm-info">住宿</span></div><a class="rm-link" href="https://maps.google.com/?q=Grand+Canyon+South+Rim,AZ" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🚗<br><span>上午 出发</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🚗<br><span>上午 出发</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/330px-Canyon_River_Tree_%28165872763%29.jpeg" alt="Grand Canyon峡谷全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Grand Canyon峡谷全貌</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/330px-Canyon_River_Tree_%28165872763%29.jpeg" alt="科罗拉多河蜿蜒" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">科罗拉多河蜿蜒</span></div></div>
-    <div class="tl-text"><h4>Sedona出发 → 大峡谷南缘（2.5h）</h4><p>抵达Mather Point，第一眼大峡谷——1800米深、446公里长。许多人在此沉默，震撼无法言说。沿Rim Trail漫步欣赏不同角度全景。</p><div class="tags"><span class="t ta">到达·震撼</span><span class="t ta">Rim Trail免费</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/330px-Canyon_River_Tree_%28165872763%29.jpeg" alt="大峡谷科罗拉多河全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">大峡谷科罗拉多河全貌</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="South Rim全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">South Rim全景</span></div></div>
+    <div class="tl-text">
+      <h4>Sedona → 大峡谷南缘（2.5h）· 初见震撼</h4><p>抵达Mather Point，第一眼大峡谷——1800米深、446公里长的裂谷。沿Rim Trail自由漫步，沿途有无数观景台。</p>
+      <div class="nb-tip">✅ America the Beautiful Pass（$80/年）覆盖大峡谷入园费，提前在rec.gov购买，覆盖后续Joshua Tree和Zion</div><div class="nb-warn">⚠️ 大峡谷入口车辆排队，9月旺季建议7AM前进入，或乘免费穿梭巴士从Tusayan停车</div>
+      <div class="tags"><span class="t ta">初见震撼</span><span class="t ta">Rim Trail免费</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌇<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Yavapai_Observation_Station.jpg/330px-Yavapai_Observation_Station.jpg" alt="Desert View Watchtower" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Desert View Watchtower</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="Rim Trail夕阳" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Rim Trail夕阳</span></div></div>
-    <div class="tl-text"><h4>Desert View Watchtower · 日落全景</h4><p>大峡谷东缘最高建筑，游客比南缘入口少，视野更广阔，可看到科罗拉多河入谷处。日落金光铺满整个峡谷，住Grand Canyon Village。</p><div class="tags"><span class="t ta">日落·全景</span><span class="t ta">游客少</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌇<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Yavapai_Observation_Station.jpg/330px-Yavapai_Observation_Station.jpg" alt="Desert View Watchtower" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Desert View Watchtower</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="峡谷夕阳层次" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">峡谷夕阳层次</span></div></div>
+    <div class="tl-text">
+      <h4>Desert View Watchtower · 日落观景</h4><p>大峡谷东缘最高建筑，游客比主区少，可看到科罗拉多河入谷，视野更广阔，是最好的日落位置之一。</p>
+      <div class="nb-tip">✅ 距南缘入口约25英里，需开车，免费（已含在入园费内）</div><div class="nb-warn">⚠️ ⚠️ El Tovar Hotel极抢手，需提前4-6个月预订！没订到可住Tusayan小镇</div>
+      <div class="tags"><span class="t ta">日落·全景</span><span class="t ta">游客少</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d5">
 <div class="dc-head" onclick="tog('d5')">
   <div class="dc-badge" style="background:#2980b9;">Day 5</div>
-  <div class="dc-meta"><h3>Grand Canyon + Horseshoe Bend 🌄</h3><p>日出人生震撼 · Bright Angel徒步 · 马蹄湾日落</p></div>
+  <div class="dc-meta">
+    <h3>大峡谷 Day2 + Horseshoe Bend 🌄</h3>
+    <p>人生级日出 · Bright Angel徒步 · 马蹄湾日落 <span class="hike-badge">🥾 徒步约 约4小时（Bright Angel 3h + Horseshoe Bend步行40min）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Page, AZ（Best Western Lake Powell 或 Airbnb）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">大峡谷Village</span><span class="rm-info">5:30AM出发</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Mather Point</span><span class="rm-info">日出 步行5min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Bright Angel Trail</span><span class="rm-info">徒步3h</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">大峡谷→Page</span><span class="rm-info">1.5h车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Horseshoe Bend</span><span class="rm-info">步行20min往返</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Page小镇</span><span class="rm-info">住宿</span></div><a class="rm-link" href="https://maps.google.com/?q=Horseshoe+Bend,Page,AZ" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌅<br><span>5:30 AM</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌅<br><span>5:30 AM</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/330px-Canyon_River_Tree_%28165872763%29.jpeg" alt="Mather Point日出金光" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Mather Point日出金光</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="峡谷层叠岩层晨光" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">峡谷层叠岩层晨光</span></div></div>
-    <div class="tl-text"><h4>Mather Point 日出 · 人生必看时刻</h4><p>5:30AM出门提前占位，金光从谷底1800米处开始蔓延，层叠红色岩层逐渐被点亮。9月日出约6:10，这是行程里最震撼的画面，许多人会落泪。</p><div class="tags"><span class="t ta">人生必看</span><span class="t ta">震撼日出</span><span class="t tw">⚠️ 5:30AM出门，提前占位</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Grand_Canyon_sunrise_from_South_Rim.jpg/330px-Grand_Canyon_sunrise_from_South_Rim.jpg" alt="Mather Point日出金光" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Mather Point日出金光</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Canyon_River_Tree_%28165872763%29.jpeg/330px-Canyon_River_Tree_%28165872763%29.jpeg" alt="峡谷晨雾层次" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">峡谷晨雾层次</span></div></div>
+    <div class="tl-text">
+      <h4>Mather Point 日出 · 人生必看</h4><p>金光从1800米谷底开始蔓延，层叠红色岩层逐渐被点亮。9月日出约6:10，这是整个行程最震撼的画面。</p>
+      <div class="nb-warn">⚠️ ⚠️ 5:30AM出门，提前1小时到Mather Point占位。不需要任何预订，完全免费</div>
+      <div class="tags"><span class="t ta">人生必看</span><span class="t ta">震撼日出</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">☀️<br><span>上午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">☀️<br><span>上午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="Bright Angel Trail俯瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Bright Angel Trail俯瞰</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="步道峡谷壁" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">步道峡谷壁</span></div></div>
-    <div class="tl-text"><h4>Bright Angel Trail · 下谷徒步</h4><p>大峡谷最易走的下谷步道，建议走到1.5英里凉亭折返（3h往返），亲身感受峡谷深度变化，温度从谷顶到谷底相差10°C。</p><div class="tags"><span class="t ta">徒步·峡谷</span><span class="t tw">⚠️ 带3L水，上坡留体力</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Grand_Canyon_National_Park_-_South_-_03.jpg/330px-Grand_Canyon_National_Park_-_South_-_03.jpg" alt="Bright Angel Trail峡谷壁" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Bright Angel Trail峡谷壁</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Bright_Angel_trail_Grand_Canyon.jpg/330px-Bright_Angel_trail_Grand_Canyon.jpg" alt="步道下行视角" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">步道下行视角</span></div></div>
+    <div class="tl-text">
+      <h4>Bright Angel Trail · 下谷徒步</h4><p>建议走到1.5英里凉亭折返（3h往返），亲身感受深度变化，谷顶到1.5英里处温差约5°C。下容易上难。</p>
+      <div class="nb-warn">⚠️ ⚠️ 每人带3L以上饮水，步道中途有补水站（5月-10月开放）</div><div class="nb-warn">⚠️ 严禁当天徒步往返谷底！轻松折返即可，不要逞强</div><div class="nb-tip">✅ 徒步完全免费，已含在入园票内</div>
+      <div class="tags"><span class="t ta">徒步·峡谷</span><span class="t ta">难度中等</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌈<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Grand_Canyon_Horseshoe_Bend.jpg/330px-Grand_Canyon_Horseshoe_Bend.jpg" alt="Horseshoe Bend全景俯瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Horseshoe Bend全景俯瞰</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Grand_Canyon_Horseshoe_Bend.jpg/330px-Grand_Canyon_Horseshoe_Bend.jpg" alt="科罗拉多河马蹄湾" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">科罗拉多河马蹄湾</span></div></div>
-    <div class="tl-text"><h4>Horseshoe Bend · 马蹄湾日落</h4><p>驾车1.5h到Page小镇，步行20分钟即到。科罗拉多河270°弯曲奇景，日落时橙金天空倒映碧绿河水，极美。住Page。</p><div class="tags"><span class="t ta">打卡·摄影</span><span class="t ta">顺路必去</span><span class="t tw">⚠️ 门票$10，黄昏光线最好</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌈<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Grand_Canyon_Horseshoe_Bend.jpg/330px-Grand_Canyon_Horseshoe_Bend.jpg" alt="Horseshoe Bend全景俯瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Horseshoe Bend全景俯瞰</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Horseshoe_bend_2.jpg/330px-Horseshoe_bend_2.jpg" alt="马蹄湾近景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">马蹄湾近景</span></div></div>
+    <div class="tl-text">
+      <h4>Horseshoe Bend · 马蹄湾日落</h4><p>停车场步行20分钟即到观景台，科罗拉多河270°弯曲奇景，日落时橙金天空倒映碧绿河水。</p>
+      <div class="nb-info">ℹ️ 门票$10/车，停车场$10（分开收费），无需预约。黄昏前1小时到最佳</div><div class="nb-warn">⚠️ 观景台无护栏！边缘危险，请勿靠太近拍照</div>
+      <div class="tags"><span class="t ta">打卡·摄影</span><span class="t ta">必去</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d6">
 <div class="dc-head" onclick="tog('d6')">
   <div class="dc-badge" style="background:#16a085;">Day 6</div>
-  <div class="dc-meta"><h3>Zion National Park · 锡安 ⛰️</h3><p>天使降落 · The Narrows涉水 · 傍晚抵Vegas</p></div>
+  <div class="dc-meta">
+    <h3>Zion National Park ⛰️</h3>
+    <p>天使降落 · The Narrows涉水 · 傍晚抵Vegas <span class="hike-badge">🥾 徒步约 约6-7小时（全行程最高强度徒步日）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Las Vegas Strip酒店（The Venetian / Park MGM）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Page, AZ</span><span class="rm-info">出发 2.5h</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Zion NP入口</span><span class="rm-info">乘穿梭巴士</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Angels Landing</span><span class="rm-info">4h徒步往返</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">The Narrows</span><span class="rm-info">2.5h涉水</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Springdale出口</span><span class="rm-info">返程</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Las Vegas</span><span class="rm-info">2.5h车程，住宿</span></div><a class="rm-link" href="https://maps.google.com/?q=Zion+National+Park,UT" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🚗<br><span>早上 出发</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🚗<br><span>早上 出发</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Zion_angels_landing_view.jpg/330px-Zion_angels_landing_view.jpg" alt="Zion Canyon峡谷全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Zion Canyon峡谷全貌</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Zion_angels_landing_view.jpg/330px-Zion_angels_landing_view.jpg" alt="锡安峡谷绿意" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">锡安峡谷绿意</span></div></div>
-    <div class="tl-text"><h4>Page出发 → Zion NP（2.5h）</h4><p>进入Zion Canyon，600米高红色砂岩峭壁从两侧夹道而来，乘免费穿梭巴士进入园区——这是全程最惊艳的入园仪式之一。</p><div class="tags"><span class="t ta">国家公园</span><span class="t ta">震撼入园</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Zion_angels_landing_view.jpg/330px-Zion_angels_landing_view.jpg" alt="Zion Canyon全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Zion Canyon全貌</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Zion_angels_landing_view.jpg/330px-Zion_angels_landing_view.jpg" alt="从上往下看峡谷" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">从上往下看峡谷</span></div></div>
+    <div class="tl-text">
+      <h4>Page→Zion NP（2.5h）· 穿梭巴士入园</h4><p>Zion禁止私家车进入峡谷核心区，必须乘免费穿梭巴士。建议尽早到达，8AM前出发避开人流。</p>
+      <div class="nb-warn">⚠️ ⚠️ Zion需要提前购票（$35/车，或用America the Beautiful Pass免费）。旺季停车有限，停Springdale后乘巴士进入</div>
+      <div class="tags"><span class="t ta">国家公园</span><span class="t ta">巴士入园</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🧗<br><span>上午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🧗<br><span>上午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Angels_Landing_-_Zion_Canyon.jpg/330px-Angels_Landing_-_Zion_Canyon.jpg" alt="Angels Landing峭壁全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Angels Landing峭壁全貌</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Angels_Landing_-_Zion_Canyon.jpg/330px-Angels_Landing_-_Zion_Canyon.jpg" alt="链条攀爬段" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">链条攀爬段</span></div></div>
-    <div class="tl-text"><h4>Angels Landing · 天使降落</h4><p>最后500米扶铁链攀爬，从顶部俯瞰Zion峡谷壮阔全景，高度感极强。需提前3个月在recreation.gov抽签。</p><div class="tags"><span class="t ta">极限徒步</span><span class="t ta">顶部全景</span><span class="t tw">⚠️ 必须提前3个月抽签</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Angels_Landing_-_Zion_Canyon.jpg/330px-Angels_Landing_-_Zion_Canyon.jpg" alt="Angels Landing全貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Angels Landing全貌</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Zion_angels_landing_view.jpg/330px-Zion_angels_landing_view.jpg" alt="链条攀爬段俯瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">链条攀爬段俯瞰</span></div></div>
+    <div class="tl-text">
+      <h4>Angels Landing · 天使降落（抽签入场）</h4><p>最后500米扶铁链攀爬，俯瞰Zion峡谷。往返约5.4英里、爬升454米，约4小时。难度高但体验无与伦比。</p>
+      <div class="nb-warn">⚠️ ⚠️【必须提前3个月抽签！】在 recreation.gov 申请 Angels Landing permit，$6/人。9月出行=6月抽签</div><div class="nb-info">ℹ️ 未中签备选：Scout Lookout（不需要链条，同样壮观）或 Canyon Overlook Trail（轻松，1小时）</div>
+      <div class="tags"><span class="t ta">极限徒步</span><span class="t ta">高度感极强</span><span class="t ta">需抽签</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌊<br><span>下午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌊<br><span>下午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Zion_Narrows.jpg/330px-Zion_Narrows.jpg" alt="The Narrows峡谷涉水" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">The Narrows峡谷涉水</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Zion_Narrows.jpg/330px-Zion_Narrows.jpg" alt="砂岩峡谷水流" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">砂岩峡谷水流</span></div></div>
-    <div class="tl-text"><h4>The Narrows · 窄峡谷涉水</h4><p>Virgin河穿越红色砂岩峡谷，最窄处仅6米，9月水位适中是最佳时节。涉水2-3小时，园区租防水靴$20。</p><div class="tags"><span class="t ta">涉水徒步</span><span class="t ta">9月最佳水位</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Zion_Narrows.jpg/330px-Zion_Narrows.jpg" alt="The Narrows涉水" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">The Narrows涉水</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/The_Narrows_Zion_NP.jpg/330px-The_Narrows_Zion_NP.jpg" alt="砂岩峡谷水流" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">砂岩峡谷水流</span></div></div>
+    <div class="tl-text">
+      <h4>The Narrows · 窄峡谷涉水徒步</h4><p>Virgin河穿越最窄仅6米的砂岩峡谷，9月水位适中（膝盖以下），涉水行走约2-3小时，非常独特。</p>
+      <div class="nb-info">ℹ️ 在Springdale租防水靴+杖$20，保护脚踝。9月水温约18°C，凉但不冷</div><div class="nb-tip">✅ 无需抽签，直接入园即可走。上游段（非从顶部下行）不需要额外许可</div>
+      <div class="tags"><span class="t ta">涉水徒步</span><span class="t ta">无需抽签</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🚗<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="Las Vegas夜晚霓虹" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Las Vegas夜晚霓虹</span></div></div>
-    <div class="tl-text"><h4>驾车前往 Las Vegas（2.5h）</h4><p>从清新峡谷到霓虹赌城，2.5小时公路创造了地球上最强烈的对比之一。入住Strip酒店。</p><div class="tags"><span class="t ta">抵达Vegas</span><span class="t ta">极致反差</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🚗<br><span>傍晚 出发</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="Vegas夜晚抵达" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Vegas夜晚抵达</span></div></div>
+    <div class="tl-text">
+      <h4>驾车前往 Las Vegas（2.5h）</h4><p>从清新峡谷切换到霓虹赌城，2.5小时公路是地球上最强的场景反差。晚上入住Strip酒店。</p>
+      <div class="nb-tip">✅ 今天是全行程强度最高的一天，到Vegas后好好休息</div>
+      <div class="tags"><span class="t ta">抵达Vegas</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d7">
 <div class="dc-head" onclick="tog('d7')">
   <div class="dc-badge" style="background:#f39c12;">Day 7</div>
-  <div class="dc-meta"><h3>Las Vegas Day 1 🎰</h3><p>Strip漫步 · Fremont霓虹 · Sphere球幕体验</p></div>
+  <div class="dc-meta">
+    <h3>Las Vegas Day 1 🎰</h3>
+    <p>Strip漫步 · Fremont霓虹 · Sphere球幕 <span class="hike-badge">🥾 徒步约 无徒步（城市步行约5公里）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Las Vegas Strip（同Day6，继续住Strip）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Strip酒店</span><span class="rm-info">步行</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Bellagio喷泉</span><span class="rm-info">免费</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">The Venetian/Wynn</span><span class="rm-info">逛大堂</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Fremont Street</span><span class="rm-info">打车20min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">The Sphere</span><span class="rm-info">打车回Strip</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Strip酒店</span><span class="rm-info">步行回</span></div><a class="rm-link" href="https://maps.google.com/?q=Las+Vegas+Strip,NV" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌞<br><span>白天</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌞<br><span>白天</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="Las Vegas Strip白天" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Las Vegas Strip白天</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/LasVegas-FremontStreet.jpg/330px-LasVegas-FremontStreet.jpg" alt="老Vegas霓虹拱廊" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">老Vegas霓虹拱廊</span></div></div>
-    <div class="tl-text"><h4>Strip探索 · Bellagio喷泉（免费）</h4><p>逛Venetian运河、Wynn植物园、Caesars Palace。Bellagio音乐喷泉每30分钟一次，完全免费。Cosmopolitan 3楼找Secret Pizza隐藏餐厅（$6/片，深夜开到2AM）。</p><div class="tags"><span class="t ta">Strip漫步</span><span class="t ta">Bellagio喷泉免费</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="Las Vegas Strip白天" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Las Vegas Strip白天</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/LasVegas-FremontStreet.jpg/330px-LasVegas-FremontStreet.jpg" alt="Fremont Street霓虹穹顶" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Fremont Street霓虹穹顶</span></div></div>
+    <div class="tl-text">
+      <h4>Strip白天探索 · Bellagio喷泉（免费）</h4><p>逛各大酒店大堂：The Venetian运河船夫、Wynn植物园、Caesars Palace雕塑廊。Bellagio喷泉每30分钟一次，完全免费，是Vegas最值钱的免费项目。</p>
+      <div class="nb-tip">✅ Cosmopolitan 3楼有一家「Secret Pizza」无牌子，NY风格薄饼$6/片，深夜2AM还开，必须去找</div><div class="nb-tip">✅ Strip各酒店停车全部免费（自助停车），无需付费</div>
+      <div class="tags"><span class="t ta">Strip漫步</span><span class="t ta">Bellagio免费</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌆<br><span>傍晚</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌆<br><span>傍晚</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/LasVegas-FremontStreet.jpg/330px-LasVegas-FremontStreet.jpg" alt="Fremont Street霓虹穹顶" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Fremont Street霓虹穹顶</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/LasVegas-FremontStreet.jpg/330px-LasVegas-FremontStreet.jpg" alt="老Vegas经典赌场" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">老Vegas经典赌场</span></div></div>
-    <div class="tl-text"><h4>Fremont Street · 老城霓虹光影秀</h4><p>1500英尺长LED穹顶每小时整点光影秀（免费），老Vegas历史街区氛围，比Strip更嘈杂真实，两侧全是1950年代经典老赌场。</p><div class="tags"><span class="t ta">霓虹·历史</span><span class="t ta">光影秀免费</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/LasVegas-FremontStreet.jpg/330px-LasVegas-FremontStreet.jpg" alt="Fremont Street全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Fremont Street全景</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/LasVegas-FremontStreet.jpg/330px-LasVegas-FremontStreet.jpg" alt="老Vegas霓虹" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">老Vegas霓虹</span></div></div>
+    <div class="tl-text">
+      <h4>Fremont Street Experience · 老城霓虹</h4><p>1500英尺长LED穹顶，每小时整点光影秀免费。老Vegas街区氛围更真实，两侧经典老赌场，感受1950年代赌城原味。</p>
+      <div class="nb-info">ℹ️ Fremont Street距Strip约5km，打车$12-15或乘BTC单轨。夜晚10点后人最多最热闹</div>
+      <div class="tags"><span class="t ta">霓虹·历史</span><span class="t ta">完全免费</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌙<br><span>晚上</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Sphere-exosphere-on-Jan-26-2024.jpg/330px-Sphere-exosphere-on-Jan-26-2024.jpg" alt="The Sphere球幕外观" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">The Sphere球幕外观</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Sphere-exosphere-on-Jan-26-2024.jpg/330px-Sphere-exosphere-on-Jan-26-2024.jpg" alt="球幕夜间灯光" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">球幕夜间灯光</span></div></div>
-    <div class="tl-text"><h4>The Sphere · 全球最大沉浸式球幕</h4><p>2023年开幕，270°沉浸式巨型球幕，视觉效果彻底颠覆认知，Vegas最热门新体验。$100-200/人。</p><div class="tags"><span class="t ta">沉浸体验</span><span class="t ta">Vegas必看</span><span class="t tw">⚠️ 提前2周购票</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌙<br><span>晚上</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Sphere-exosphere-on-Jan-26-2024.jpg/330px-Sphere-exosphere-on-Jan-26-2024.jpg" alt="The Sphere外观" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">The Sphere外观</span></div></div>
+    <div class="tl-text">
+      <h4>The Sphere · 全球最大沉浸式球幕</h4><p>2023年开幕，270°沉浸式巨型球幕，视觉效果颠覆认知，是Vegas最热门新体验。演出约1小时。</p>
+      <div class="nb-warn">⚠️ ⚠️ 提前2周在 thesphere.com 购票，$100-200/人，好位置会提前售罄</div><div class="nb-tip">✅ 停车在Venetian对面，步行10分钟到Sphere</div>
+      <div class="tags"><span class="t ta">沉浸体验</span><span class="t ta">Vegas必看</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d8">
 <div class="dc-head" onclick="tog('d8')">
   <div class="dc-badge" style="background:#f39c12;">Day 8</div>
-  <div class="dc-meta"><h3>Las Vegas Day 2 + 送别朋友 🤝</h3><p>Red Rock自驾 · High Roller · 朋友告别</p></div>
+  <div class="dc-meta">
+    <h3>Las Vegas Day 2 · 告别朋友 🤝</h3>
+    <p>Red Rock自驾 · High Roller · 送别 <span class="hike-badge">🥾 徒步约 约1小时（Red Rock短途）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Las Vegas Strip（送别朋友后你继续住一晚或明早出发）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Strip酒店</span><span class="rm-info">出发</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Red Rock Canyon</span><span class="rm-info">30min车程，13英里环路</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">返回Strip</span><span class="rm-info">30min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">High Roller</span><span class="rm-info">步行</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Strip告别晚餐</span><span class="rm-info">🤝</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">朋友回AZ</span><span class="rm-info">4h车程回PHX</span></div><a class="rm-link" href="https://maps.google.com/?q=Red+Rock+Canyon,NV" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌅<br><span>上午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌅<br><span>上午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Red_Rock_Canyon_National_Conservation_Area_view_031513.JPG/330px-Red_Rock_Canyon_National_Conservation_Area_view_031513.JPG" alt="Red Rock Canyon红色砂岩" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Red Rock Canyon红色砂岩</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Red_Rock_Canyon_National_Conservation_Area_view_031513.JPG/330px-Red_Rock_Canyon_National_Conservation_Area_view_031513.JPG" alt="峡谷自驾环路" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">峡谷自驾环路</span></div></div>
-    <div class="tl-text"><h4>Red Rock Canyon · 沙漠峡谷</h4><p>距Strip仅30分钟，2000英尺红色砂岩绝壁，早晨阳光斜射时砂岩最红。13英里环路自驾，门票$15/车。</p><div class="tags"><span class="t ta">自驾·峡谷</span><span class="t ta">早晨最红</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Red_Rock_Canyon_National_Conservation_Area_view_031513.JPG/330px-Red_Rock_Canyon_National_Conservation_Area_view_031513.JPG" alt="Red Rock Canyon红砂岩" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Red Rock Canyon红砂岩</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/RedRockCanyonNCA.jpg/330px-RedRockCanyonNCA.jpg" alt="峡谷自驾环路" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">峡谷自驾环路</span></div></div>
+    <div class="tl-text">
+      <h4>Red Rock Canyon · 13英里景观自驾</h4><p>距Strip仅30分钟，2000英尺红色砂岩绝壁，早晨斜射阳光下砂岩最红。自驾13英里环路约1.5小时，可随时停车短途散步。</p>
+      <div class="nb-tip">✅ 门票$15/车（用America the Beautiful Pass免费），无需预约，直接开车入园</div><div class="nb-info">ℹ️ 早晨光线最好，8AM前到，下午逆光效果差</div>
+      <div class="tags"><span class="t ta">自驾·峡谷</span><span class="t ta">反差感强</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🎡<br><span>下午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🎡<br><span>下午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="Vegas全景High Roller" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Vegas全景High Roller</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="Strip最后一眼" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Strip最后一眼</span></div></div>
-    <div class="tl-text"><h4>High Roller · 摩天轮俯瞰Strip</h4><p>167米全球最高摩天轮，30分钟缓慢旋转俯瞰整个Strip，与朋友的最后一个纪念合影。$30-40/人。</p><div class="tags"><span class="t ta">摩天轮·全景</span><span class="t ta">合影留念</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Las_Vegas_Strip_at_night.jpg/330px-Las_Vegas_Strip_at_night.jpg" alt="Vegas Strip全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Vegas Strip全景</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Las_Vegas_Strip_09_2017_4897.jpg/330px-Las_Vegas_Strip_09_2017_4897.jpg" alt="High Roller视角" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">High Roller视角</span></div></div>
+    <div class="tl-text">
+      <h4>High Roller · 摩天轮俯瞰 + 与朋友最后合影</h4><p>167米全球最高摩天轮，30分钟缓慢旋转，含酒吧舱（Happy Half Hour版本含无限畅饮）。与朋友拍行程最后的合影。</p>
+      <div class="nb-info">ℹ️ 票价：日间$30，夜间$40，含酒$55。官网或现场购票均可</div>
+      <div class="tags"><span class="t ta">摩天轮·全景</span><span class="t ta">合影留念</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🤝<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Arizona再见" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Arizona再见</span></div></div>
-    <div class="tl-text"><h4>与朋友告别 · 朋友开车回Arizona</h4><p>Las Vegas是整个行程最自然的告别点——朋友从Vegas开车约4小时回Phoenix/Scottsdale。保重，下次再见！你继续向西去加州。</p><div class="tags"><span class="t ta">自然告别点</span><span class="t ta">朋友回AZ约4h</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🤝<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="告别时刻" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">告别时刻</span></div></div>
+    <div class="tl-text">
+      <h4>与朋友告别 · 朋友驾车返回AZ</h4><p>Vegas是整个行程最自然的分别点。朋友从Vegas开车约4小时回Phoenix。你明天继续向西前往Joshua Tree。</p>
+      <div class="nb-tip">✅ 提前在Google Maps确认朋友回程路线（I-11或US-93），大概4h到Phoenix</div>
+      <div class="tags"><span class="t ta">自然告别</span><span class="t ta">保重再见</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d9">
 <div class="dc-head" onclick="tog('d9')">
   <div class="dc-badge" style="background:#c0392b;">Day 9</div>
-  <div class="dc-meta"><h3>Joshua Tree NP · 星空沙漠 🌵</h3><p>沙漠奇石 · Keys View日落 · 银河星空</p></div>
+  <div class="dc-meta">
+    <h3>Joshua Tree NP · 星空沙漠 🌵</h3>
+    <p>沙漠奇石 · Keys View日落 · 银河星空 <span class="hike-badge">🥾 徒步约 约2小时（轻松）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：29 Palms Inn 或 Palm Desert（公园东门附近）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Las Vegas</span><span class="rm-info">出发 3.5h</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Joshua Tree NP西门</span><span class="rm-info">入园</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Skull Rock</span><span class="rm-info">奇石短徒步 45min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Keys View</span><span class="rm-info">日落，开车直达</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">园内或29 Palms</span><span class="rm-info">住宿·夜晚观星</span></div><a class="rm-link" href="https://maps.google.com/?q=Joshua+Tree+National+Park,CA" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🚗<br><span>上午 出发</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🚗<br><span>上午 出发</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg/330px-Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg" alt="Joshua Tree奇石地貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Joshua Tree奇石地貌</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg/330px-Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg" alt="约书亚树与花岗岩巨石" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">约书亚树与花岗岩巨石</span></div></div>
-    <div class="tl-text"><h4>Vegas出发 → Joshua Tree（3.5h）</h4><p>进入公园，约书亚树与花岗岩巨石抱团，Skull Rock步道轻松45分钟，感受完全不同于大峡谷的荒野美学。</p><div class="tags"><span class="t ta">沙漠奇景</span><span class="t ta">奇石徒步</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg/330px-Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg" alt="Joshua Tree奇石地貌" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Joshua Tree奇石地貌</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Joshua_tree_in_joshua_tree_national_park.jpg/330px-Joshua_tree_in_joshua_tree_national_park.jpg" alt="约书亚树与花岗岩" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">约书亚树与花岗岩</span></div></div>
+    <div class="tl-text">
+      <h4>Vegas→Joshua Tree（3.5h）· 公园探索</h4><p>两种沙漠生态交汇，约书亚树与花岗岩巨石组合，风格奇异。Skull Rock步道1.7英里轻松，奇石形态各异趣味十足。</p>
+      <div class="nb-tip">✅ America the Beautiful Pass免费入园（$35票价），提前准备好</div><div class="nb-warn">⚠️ ⚠️ 公园内无餐厅无商店！提前在Twentynine Palms小镇补给食物和饮水</div>
+      <div class="tags"><span class="t ta">沙漠奇景</span><span class="t ta">轻松徒步</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌅<br><span>傍晚</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌅<br><span>傍晚</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Joshua_Tree_NP_Keys_View.jpg/330px-Joshua_Tree_NP_Keys_View.jpg" alt="Keys View日落全景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Keys View日落全景</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg/330px-Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg" alt="日落下的约书亚树" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">日落下的约书亚树</span></div></div>
-    <div class="tl-text"><h4>Keys View · 全园最佳日落观景</h4><p>海拔1583米，俯瞰Coachella Valley和Salton Sea，日落时天空从橙转紫，沙漠轮廓线极美。免费，开车直达。</p><div class="tags"><span class="t ta">日落·全景</span><span class="t ta">免费直达</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Joshua_Tree_NP_Keys_View.jpg/330px-Joshua_Tree_NP_Keys_View.jpg" alt="Keys View日落俯瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Keys View日落俯瞰</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg/330px-Joshua_Tree_-_Cyclops_%2B_Potato_Head_-_Sunrise.jpg" alt="日落下的约书亚树" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">日落下的约书亚树</span></div></div>
+    <div class="tl-text">
+      <h4>Keys View · 全园最佳日落观景</h4><p>海拔1583米，俯瞰整个Coachella Valley和Salton Sea，天气好时可见墨西哥山峰。日落时天空橙转紫，美极了。</p>
+      <div class="nb-tip">✅ 完全免费，开车直达，大停车场。日落前30分钟到即可</div>
+      <div class="tags"><span class="t ta">日落·全景</span><span class="t ta">免费直达</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌌<br><span>夜晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG-Milky_Way_Arch.jpg/330px-PNG-Milky_Way_Arch.jpg" alt="银河星空" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">银河星空</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG-Milky_Way_Arch.jpg/330px-PNG-Milky_Way_Arch.jpg" alt="沙漠夜空" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">沙漠夜空</span></div></div>
-    <div class="tl-text"><h4>银河星空 · 全美顶级暗天保护区</h4><p>Joshua Tree是全美最佳观星地之一，9月晴天率极高，银河清晰可见。躺在沙漠巨石上仰望，是整个行程最治愈的时刻。</p><div class="tags"><span class="t ta">银河·观星</span><span class="t ta">全美顶级暗天</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌌<br><span>夜晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/PNG-Milky_Way_Arch.jpg/330px-PNG-Milky_Way_Arch.jpg" alt="Joshua Tree银河星空" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Joshua Tree银河星空</span></div></div>
+    <div class="tl-text">
+      <h4>银河星空 · 全美顶级暗天保护区</h4><p>9月晴天率极高，无光害，银河清晰可见。躺在沙漠巨石上仰望是行程最治愈的时刻。</p>
+      <div class="nb-tip">✅ 手机拍银河推荐：iPhone夜间模式或专业APP「NightCap」，三脚架效果更好</div><div class="nb-info">ℹ️ 夜晚沙漠降温明显，带外套</div>
+      <div class="tags"><span class="t ta">银河·观星</span><span class="t ta">一生难忘</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d10">
 <div class="dc-head" onclick="tog('d10')">
   <div class="dc-badge" style="background:#e94560;">Day 10</div>
-  <div class="dc-meta"><h3>Los Angeles 抵达 · 海滩首日 🌊</h3><p>Santa Monica · Venice Beach · 太平洋初见</p></div>
+  <div class="dc-meta">
+    <h3>Los Angeles 抵达 · 海滩首日 🌊</h3>
+    <p>Santa Monica · Venice Beach · 太平洋初见 <span class="hike-badge">🥾 徒步约 无徒步（海滩漫步约5km）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：Santa Monica或Venice附近（推荐 Shutters on the Beach 或 Hotel Erwin）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">29 Palms / Palm Desert</span><span class="rm-info">出发 2h</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Santa Monica Pier</span><span class="rm-info">Route 66终点</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Venice Beach</span><span class="rm-info">Boardwalk 步行2km</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Abbot Kinney Blvd</span><span class="rm-info">文青街逛逛</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Santa Monica海边酒店</span><span class="rm-info">住宿</span></div><a class="rm-link" href="https://maps.google.com/?q=Santa+Monica+Pier,CA" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🚗<br><span>上午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🚗<br><span>上午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Santa_monica_pier_entrance_evening.jpg/330px-Santa_monica_pier_entrance_evening.jpg" alt="Santa Monica Pier傍晚" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Santa Monica Pier傍晚</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Santa_monica_pier_entrance_evening.jpg/330px-Santa_monica_pier_entrance_evening.jpg" alt="Route 66终点码头" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Route 66终点码头</span></div></div>
-    <div class="tl-text"><h4>Joshua Tree出发 → LA（2h）· Santa Monica Pier</h4><p>Route 66终点。历经大峡谷、沙漠、星空，终于抵达太平洋。日落时太平洋金光染天，历经沙漠后在此泡脚极为治愈。</p><div class="tags"><span class="t ta">Route 66终点</span><span class="t ta">太平洋初见</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Santa_monica_pier_entrance_evening.jpg/330px-Santa_monica_pier_entrance_evening.jpg" alt="Santa Monica Pier傍晚灯光" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Santa Monica Pier傍晚灯光</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Santa_Monica_Pier_2012.jpg/330px-Santa_Monica_Pier_2012.jpg" alt="Santa Monica海边" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Santa Monica海边</span></div></div>
+    <div class="tl-text">
+      <h4>Joshua Tree→LA（2h）· Santa Monica Pier</h4><p>Route 66终点。历经大峡谷、沙漠、星空，终于抵达太平洋海岸。码头海边游乐园，转角就是太平洋，极为治愈。</p>
+      <div class="nb-tip">✅ Santa Monica Pier停车在码头旁的停车楼$3/小时，步行即到</div>
+      <div class="tags"><span class="t ta">Route 66终点</span><span class="t ta">太平洋初见</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🛹<br><span>下午</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Venice_Beach_Boardwalk.jpg/330px-Venice_Beach_Boardwalk.jpg" alt="Venice Beach海滩步道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Venice Beach海滩步道</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Venice_Beach_Boardwalk.jpg/330px-Venice_Beach_Boardwalk.jpg" alt="Abbot Kinney街道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Abbot Kinney街道</span></div></div>
-    <div class="tl-text"><h4>Venice Beach · 街头文化</h4><p>街头艺人、涂鸦墙、滑板公园、肌肉海滩，LA最有个性的海滩区。Abbot Kinney大街是LA最潮商业街。</p><div class="tags"><span class="t ta">街头文化</span><span class="t ta">LA最有个性</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🛹<br><span>下午</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Venice_Beach_Boardwalk.jpg/330px-Venice_Beach_Boardwalk.jpg" alt="Venice Beach步道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Venice Beach步道</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Venice_Beach_Boardwalk.jpg/330px-Venice_Beach_Boardwalk.jpg" alt="Abbot Kinney街道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Abbot Kinney街道</span></div></div>
+    <div class="tl-text">
+      <h4>Venice Beach · 街头文化 + Abbot Kinney</h4><p>街头艺人、涂鸦墙、滑板公园，LA最有个性的海滩区。Abbot Kinney是LA最潮商业街，精品餐厅和设计师品牌。</p>
+      <div class="nb-tip">✅ Venice Beach停车场$15-25，建议停Santa Monica再步行或骑单车（共享单车$1/次）过来</div>
+      <div class="tags"><span class="t ta">街头文化</span><span class="t ta">LA必去</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d11">
 <div class="dc-head" onclick="tog('d11')">
   <div class="dc-badge" style="background:#e94560;">Day 11</div>
-  <div class="dc-meta"><h3>Los Angeles · 文化艺术日 🎬</h3><p>Getty Center · 好莱坞 · Griffith天文台</p></div>
+  <div class="dc-meta">
+    <h3>Los Angeles · 文化艺术日 🎬</h3>
+    <p>Getty Center · 好莱坞 · Griffith Observatory <span class="hike-badge">🥾 徒步约 约1小时（Griffith Park步行）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：同Day10，继续住Santa Monica或Hollywood区</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Santa Monica酒店</span><span class="rm-info">出发</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Getty Center</span><span class="rm-info">20min车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Hollywood Walk of Fame</span><span class="rm-info">30min车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">TCL中国剧院</span><span class="rm-info">步行5min</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Griffith Observatory</span><span class="rm-info">20min车程，日落观景</span></div><a class="rm-link" href="https://maps.google.com/?q=Getty+Center,Los+Angeles,CA" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🏛️<br><span>上午 10点前</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🏛️<br><span>上午 10点前到</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Aerial_Getty_Museum.jpg/330px-Aerial_Getty_Museum.jpg" alt="Getty Center鸟瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Getty Center鸟瞰</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Aerial_Getty_Museum.jpg/330px-Aerial_Getty_Museum.jpg" alt="博物馆建筑与花园" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">博物馆建筑与花园</span></div></div>
-    <div class="tl-text"><h4>Getty Center · 世界级免费博物馆</h4><p>收藏梵高《鸢尾花》、莫奈、伦勃朗原作，建筑本身获AIA大奖，俯瞰LA全城。入馆免费（停车$20），10点前到避开拥堵。</p><div class="tags"><span class="t ta">艺术·建筑</span><span class="t ta">入馆免费</span><span class="t tw">⚠️ 10AM前到避免停车排队</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Aerial_Getty_Museum.jpg/330px-Aerial_Getty_Museum.jpg" alt="Getty Center鸟瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Getty Center鸟瞰</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Getty_Center_Museum_building.jpg/330px-Getty_Center_Museum_building.jpg" alt="Getty建筑花园" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Getty建筑花园</span></div></div>
+    <div class="tl-text">
+      <h4>Getty Center · 世界级免费博物馆</h4><p>收藏梵高《鸢尾花》、莫奈、伦勃朗原作，建筑获AIA大奖，可俯瞰LA全城和太平洋。入馆完全免费。</p>
+      <div class="nb-warn">⚠️ ⚠️ 停车$20，必须10点前到！停车场7-8点开始排队，晚了要等30-40分钟</div><div class="nb-tip">✅ 也可在Sepulveda Blvd下车步行，或乘打车直接到正门（停车费省了）</div>
+      <div class="tags"><span class="t ta">艺术·建筑</span><span class="t ta">入馆免费</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌟<br><span>下午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌟<br><span>下午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Hollywood_sign.jpg/330px-Hollywood_sign.jpg" alt="Hollywood Sign好莱坞标志" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Hollywood Sign好莱坞标志</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Hollywood_sign.jpg/330px-Hollywood_sign.jpg" alt="好莱坞山丘" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">好莱坞山丘</span></div></div>
-    <div class="tl-text"><h4>Hollywood · 星光大道 + 好莱坞标志</h4><p>Walk of Fame星光大道，TCL中国剧院明星手印脚印。好莱坞标志是LA最有辨识度的地标。</p><div class="tags"><span class="t ta">打卡·明星</span><span class="t ta">影迷必到</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Hollywood_sign.jpg/330px-Hollywood_sign.jpg" alt="Hollywood Sign" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Hollywood Sign</span></div></div>
+    <div class="tl-text">
+      <h4>Hollywood · 星光大道 + TCL中国剧院</h4><p>Walk of Fame明星铭牌2700+颗，TCL Chinese Theatre门口历代巨星手印脚印，好莱坞标志是LA最辨识度地标。</p>
+      <div class="nb-tip">✅ Hollywood大道停车建议：Highland Ave停车楼$5/2小时（官方停车），步行3分钟到星光大道</div>
+      <div class="tags"><span class="t ta">打卡·明星</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🔭<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Griffith_Observatory_from_above.jpg/330px-Griffith_Observatory_from_above.jpg" alt="Griffith Observatory鸟瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Griffith Observatory鸟瞰</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Griffith_Observatory_from_above.jpg/330px-Griffith_Observatory_from_above.jpg" alt="天文台与LA城市" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">天文台与LA城市</span></div></div>
-    <div class="tl-text"><h4>Griffith Observatory · 城市日落全景</h4><p>俯瞰LA全城最佳位置，好莱坞标志近在眼前，日落时城市灯光与夕阳同框。提前预约停车位。</p><div class="tags"><span class="t ta">日落·城市全景</span><span class="t tw">⚠️ 停车需提前预约</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🔭<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Griffith_Observatory_from_above.jpg/330px-Griffith_Observatory_from_above.jpg" alt="Griffith Observatory鸟瞰" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Griffith Observatory鸟瞰</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/GriffithObservatoryFromGriffithPark.jpg/330px-GriffithObservatoryFromGriffithPark.jpg" alt="天文台与LA城市" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">天文台与LA城市</span></div></div>
+    <div class="tl-text">
+      <h4>Griffith Observatory · 城市日落全景</h4><p>俯瞰LA全城最佳位置，好莱坞标志近在眼前，日落时城市灯光与夕阳同框。天文台内部也值得参观（免费）。</p>
+      <div class="nb-warn">⚠️ ⚠️ 停车位极少！必须在官网 griffithobservatory.org 提前预约停车（$8）。或乘DASH公交/打车上山</div>
+      <div class="tags"><span class="t ta">日落·城市全景</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d12">
 <div class="dc-head" onclick="tog('d12')">
   <div class="dc-badge" style="background:#e94560;">Day 12</div>
-  <div class="dc-meta"><h3>Los Angeles · 时尚购物 🛍️</h3><p>Rodeo Drive · LACMA · 海边最后日落</p></div>
+  <div class="dc-meta">
+    <h3>Los Angeles · 时尚轻松日 🛍️</h3>
+    <p>Rodeo Drive · LACMA · 海边最后日落 <span class="hike-badge">🥾 徒步约 无徒步</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：同Day10，继续住Santa Monica或West Hollywood</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">酒店</span><span class="rm-info">出发</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Rodeo Drive / Beverly Hills</span><span class="rm-info">20min车程</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">The Grove</span><span class="rm-info">10min</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">LACMA</span><span class="rm-info">5min</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">Santa Monica海滩</span><span class="rm-info">20min，日落告别</span></div><a class="rm-link" href="https://maps.google.com/?q=Rodeo+Drive,Beverly+Hills,CA" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🛍️<br><span>上午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🛍️<br><span>上午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Beverly Hills街道" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Beverly Hills街道</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="购物区" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">购物区</span></div></div>
-    <div class="tl-text"><h4>Rodeo Drive · Beverly Hills</h4><p>全球最著名奢侈品大街，Chanel、Gucci、LV旗舰店云集，感受Beverly Hills奢华气质。</p><div class="tags"><span class="t ta">购物·时尚</span><span class="t ta">Beverly Hills</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Scottsdale_AZ_Old_Town_Panorama_2011.jpg/330px-Scottsdale_AZ_Old_Town_Panorama_2011.jpg" alt="Beverly Hills街道氛围" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Beverly Hills街道氛围</span></div></div>
+    <div class="tl-text">
+      <h4>Rodeo Drive · Beverly Hills</h4><p>全球最著名奢侈品街，Chanel、Gucci、LV旗舰店云集，不买也值得走走感受气质。周边住宅区适合拍照。</p>
+      <div class="nb-tip">✅ Beverly Hills路边停车免费2小时（需要设APP），地下停车楼$3-5/小时</div>
+      <div class="tags"><span class="t ta">购物·时尚</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌿<br><span>下午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌿<br><span>下午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/El_Prado_Balboa_Park_2.jpg/330px-El_Prado_Balboa_Park_2.jpg" alt="LACMA博物馆外景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">LACMA博物馆外景</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/El_Prado_Balboa_Park_2.jpg/330px-El_Prado_Balboa_Park_2.jpg" alt="城市艺术空间" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">城市艺术空间</span></div></div>
-    <div class="tl-text"><h4>LACMA · 洛杉矶艺术博物馆</h4><p>Urban Light装置（202盏复古路灯）是LA最多人拍照的地标，外部免费参观。周二15点后博物馆免费入内。</p><div class="tags"><span class="t ta">艺术·必拍</span><span class="t ta">Urban Light</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/El_Prado_Balboa_Park_2.jpg/330px-El_Prado_Balboa_Park_2.jpg" alt="LACMA外景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">LACMA外景</span></div></div>
+    <div class="tl-text">
+      <h4>LACMA · Urban Light装置 必拍</h4><p>202盏复古路灯排列的Urban Light是LA最多人拍照的地标之一，外部完全免费参观。馆内超10万件艺术品。</p>
+      <div class="nb-info">ℹ️ Urban Light全天开放免费。馆内票价$25，周二免费（第二个周二15点后）</div>
+      <div class="tags"><span class="t ta">艺术·必拍</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌊<br><span>傍晚</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Santa_monica_pier_entrance_evening.jpg/330px-Santa_monica_pier_entrance_evening.jpg" alt="Santa Monica最后日落" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Santa Monica最后日落</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Santa_monica_pier_entrance_evening.jpg/330px-Santa_monica_pier_entrance_evening.jpg" alt="太平洋告别" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">太平洋告别</span></div></div>
-    <div class="tl-text"><h4>Santa Monica · LA最后的日落</h4><p>在太平洋边迎接LA最后日落，带着满脑子的行程回忆，品一杯海边调酒，告别加州阳光。</p><div class="tags"><span class="t ta">最后日落</span><span class="t ta">海边告别</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌊<br><span>傍晚</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Santa_monica_pier_entrance_evening.jpg/330px-Santa_monica_pier_entrance_evening.jpg" alt="Santa Monica最后日落" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Santa Monica最后日落</span></div></div>
+    <div class="tl-text">
+      <h4>Santa Monica · LA最后的日落告别</h4><p>在太平洋边迎接LA最后日落，带着满脑子行程回忆，品一杯海边调酒，正式告别加州阳光。</p>
+      <div class="nb-info">ℹ️ 明天出发San Diego（2h），或直接从LAX飞回。确认好明天的计划</div>
+      <div class="tags"><span class="t ta">最后日落</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div><div class="dc" id="d13">
 <div class="dc-head" onclick="tog('d13')">
   <div class="dc-badge" style="background:#8e44ad;">D13-14</div>
-  <div class="dc-meta"><h3>San Diego · 旅程收尾 🌴（可选）</h3><p>La Jolla海豹 · Balboa Park · 飞回</p></div>
+  <div class="dc-meta">
+    <h3>San Diego · 旅程完美收官 🌴（可选）</h3>
+    <p>La Jolla海豹 · Balboa Park · 飞回 <span class="hike-badge">🥾 徒步约 约1小时（La Jolla海岸散步）</span></p>
+  </div>
   <span class="dc-arrow">▾</span>
 </div>
-<div class="dc-body"><div class="tl">
+<div class="dc-body">
+  <div class="hotel-badge">🏨 住宿：San Diego市区（或LAX附近，视飞机时间）</div>
+  <div class="route-map"><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Los Angeles</span><span class="rm-info">出发 2h</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">La Jolla Cove</span><span class="rm-info">海豹礁湾·浮潜</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Balboa Park</span><span class="rm-info">下午散步</span></div><div class="rm-arrow">→</div><div class="rm-stop"><span class="rm-icon">🚗</span><span class="rm-label">Old Town SD</span><span class="rm-info">晚餐</span></div><div class="rm-arrow">→</div><div class="rm-hotel"><span class="rm-icon">🏨</span><span class="rm-label">SAN机场</span><span class="rm-info">还车·飞回 🛫</span></div><a class="rm-link" href="https://maps.google.com/?q=La+Jolla+Cove,San+Diego,CA" target="_blank">📍 Google Maps</a></div>
+  <div class="tl">
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🦭<br><span>上午</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🦭<br><span>上午</span></div>
+  </div>
   <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/LaJolla-2_%2845716612345%29.jpg/330px-LaJolla-2_%2845716612345%29.jpg" alt="La Jolla Cove碧蓝海湾" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">La Jolla Cove碧蓝海湾</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/LaJolla-2_%2845716612345%29.jpg/330px-LaJolla-2_%2845716612345%29.jpg" alt="海豹礁石" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">海豹礁石</span></div></div>
-    <div class="tl-text"><h4>La Jolla Cove · 海豹礁湾</h4><p>加州最美海岸线之一，海豹在礁石上晒太阳，9月水温25°C最舒适，可浮潜探索海下世界。</p><div class="tags"><span class="t ta">浮潜·海豹</span><span class="t ta">9月最佳</span></div></div>
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/LaJolla-2_%2845716612345%29.jpg/330px-LaJolla-2_%2845716612345%29.jpg" alt="La Jolla Cove碧海" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">La Jolla Cove碧海</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/La_Jolla_Cove_2.jpg/330px-La_Jolla_Cove_2.jpg" alt="海豹礁石近景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">海豹礁石近景</span></div></div>
+    <div class="tl-text">
+      <h4>La Jolla Cove · 海豹礁湾</h4><p>加州最美海岸线之一，海豹在礁石上晒太阳，9月水温25°C可浮潜。附近La Jolla Shores沙滩更适合游泳。</p>
+      <div class="nb-tip">✅ 停车在周边街道（免费2小时），La Jolla Village Drive附近停车楼$2/小时</div><div class="nb-info">ℹ️ 浮潜装备可在La Jolla Shores附近租，约$20/套</div>
+      <div class="tags"><span class="t ta">浮潜·海豹</span><span class="t ta">9月最佳</span></div>
+    </div>
   </div>
 </div>
 <div class="tl-item">
-  <div class="tl-left"><div class="tl-dot"></div><div class="tl-time">🌿<br><span>下午</span></div></div>
-  <div class="tl-right">
-    <div class="tl-photos"><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/El_Prado_Balboa_Park_2.jpg/330px-El_Prado_Balboa_Park_2.jpg" alt="Balboa Park西班牙建筑" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">Balboa Park西班牙建筑</span></div><div class="photo-wrap"><img class="tl-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/El_Prado_Balboa_Park_2.jpg/330px-El_Prado_Balboa_Park_2.jpg" alt="公园园景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=tl-photo-err>📷</div>'"><span class="photo-cap">公园园景</span></div></div>
-    <div class="tl-text"><h4>Balboa Park · 旅程最温柔的收尾</h4><p>全美最大城市公园之一，西班牙殖民建筑群，内含圣地亚哥动物园，随意散步感受宁静。SAN机场还车飞回，14天完美收官。</p><div class="tags"><span class="t ta">公园·收尾</span><span class="t ta">旅程终点</span></div></div>
+  <div class="tl-left"><div class="tl-dot"></div>
+    <div class="tl-time">🌿<br><span>下午</span></div>
   </div>
-</div></div></div>
+  <div class="tl-right">
+    <div class="ph-row"><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/El_Prado_Balboa_Park_2.jpg/330px-El_Prado_Balboa_Park_2.jpg" alt="Balboa Park西班牙建筑" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">Balboa Park西班牙建筑</span></div><div class="ph-wrap"><img class="ph" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Balboa_Park_Dec_2013.jpg/330px-Balboa_Park_Dec_2013.jpg" alt="公园园景" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ph-err>📷</div>'"><span class="ph-cap">公园园景</span></div></div>
+    <div class="tl-text">
+      <h4>Balboa Park · 旅程最温柔收尾</h4><p>全美最大城市公园，西班牙殖民建筑，含圣地亚哥动物园（另购票）。随意漫步感受宁静，完美收官。</p>
+      <div class="nb-info">ℹ️ 公园本身免费，圣地亚哥动物园票价$75，是否值得看你的时间安排</div><div class="nb-tip">✅ SAN机场距市区仅10分钟，还车后轻松赶上飞机</div>
+      <div class="tags"><span class="t ta">公园·收尾</span><span class="t ta">轻松告别</span></div>
+    </div>
+  </div>
+</div></div>
+</div>
 </div>
 
 </div>
